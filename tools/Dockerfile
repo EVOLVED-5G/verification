@@ -1,4 +1,4 @@
-FROM ubuntu:18.15.04
+FROM ubuntu:20.04
 
 LABEL version="1.0"
 LABEL description="Docker to run Robot Framework"
