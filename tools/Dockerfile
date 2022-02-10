@@ -44,10 +44,6 @@ RUN apt-get install -y --no-install-recommends  \
 RUN add-apt-repository ppa:deadsnakes/ppa
 RUN apt-get install -y python3.9 python3.9-venv python3.9-dev
 
-
-RUN mkdir /opt/venv
-RUN python3.9 -m venv /opt/venv
-RUN source /opt/venv/bin/activate
-RUN sh '''pip install --upgrade pip && \
-    pip install --upgrade robotframework'''
+RUN sh 'pip install --upgrade pip && \
+    pip install --upgrade robotframework'
  
