@@ -47,7 +47,7 @@ RUN apt-get install -y python3.9 python3.9-venv python3.9-dev
 
 RUN mkdir /opt/venv
 RUN python3.9 -m venv /opt/venv
-RUN sh 'source /opt/venv/bin/activate && \
-    pip install --upgrade pip && \
-    pip install --upgrade robotframework'
+RUN source /opt/venv/bin/activate
+RUN sh '''pip install --upgrade pip && \
+    pip install --upgrade robotframework'''
  
