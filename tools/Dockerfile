@@ -24,6 +24,8 @@ VOLUME $ROBOT_RESULTS_DIRECTORY
 
 WORKDIR $ROBOT_DIRECTORY
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Install dependencies
 RUN apt-get update
 RUN apt-get upgrade -y
