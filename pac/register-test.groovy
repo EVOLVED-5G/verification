@@ -8,7 +8,7 @@ pipeline {
     parameters {
         // string(name: 'BRANCH_NAME', defaultValue: 'develop', description: 'Deployment git branch name')
         string(name: 'NGINX_HOSTNAME', defaultValue: 'nginx-evolved5g.apps-dev.hi.inet', description: 'nginx hostname')
-        string(name: 'ROBOT_DOCKER_IMAGE_VERSION', defaultValue: '2.0', description: 'Robot Docker image version')
+        string(name: 'ROBOT_DOCKER_IMAGE_VERSION', defaultValue: '1.0', description: 'Robot Docker image version')
         string(name: 'ROBOT_TEST_OPTIONS', defaultValue: '', description: 'Options to set in test to robot testing. --variable <key>:<value>, --include <tag>, --exclude <tag>')
         // string(name: 'GIT_BRANCH', defaultValue: 'develop', description: 'Deployment git branch name')
         string(name: 'DUMMY_NETAPP_HOSTNAME', defaultValue: 'dummy-netapp-evolved5g.apps-dev.hi.inet', description: 'netapp hostname')
@@ -39,30 +39,30 @@ pipeline {
             }
         }
 
-        stage("Check Pods"){
+        // stage("Check Pods"){
+        //     steps{
+        //         sh """
+        //             oc get pods
+        //         """
+        //     }
+        // }
+
+        stage("Build container"){
             steps{
                 sh """
-                    oc get pods
+                    oc create -f deploymentConfig.yaml -ntest
                 """
             }
         }
 
-        // stage("Build container"){
-        //     steps{
-        //         sh """
-        //             oc create -f deploymentConfig.yaml -ntest
-        //         """
-        //     }
-        // }
-
-        // stage("Run tests"){
-        //     steps{
-        //         sh """
-        //             oc cp ../tests robot-framework:/tests
-        //             oc -ntest exec -it robot-deployment -- /bin/bash -c "robot ./tests/feature/user_register.robot"
-        //         """
-        //     }
-        // }
+        stage("Run tests"){
+            steps{
+                sh """
+                    oc cp ../tests robot-framework:/tests
+                    oc -ntest exec -it robot-deployment -- /bin/bash -c "robot ./tests/feature/user_register.robot"
+                """
+            }
+        }
     }
     post {
         always {
