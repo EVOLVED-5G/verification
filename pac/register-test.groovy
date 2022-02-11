@@ -48,14 +48,16 @@ pipeline {
         //         """
         //     }
         // }
+        // oc new-app dummy-netapp-testing
 
         stage("Build container"){
             steps{
                 dir("${env.WORKSPACE}/pac/"){
                     sh """
-                        oc create -f ./robot-deployment.yml -ntest
+                        oc create -f ./robot-deployment.yml -nevolved5g
                     """
                 }
+                    
             }
         }
 
