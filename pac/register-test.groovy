@@ -35,8 +35,8 @@ pipeline {
                             export KUBECONFIG="./kubeconfig"
                             oc login --insecure-skip-tls-verify --token=$TOKEN $OPENSHIFT_URL
                         '''
+                        readFile('kubeconfig')
                     }
-                    readFile('kubeconfig')
                 }
             }
         }
