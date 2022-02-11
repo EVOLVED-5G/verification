@@ -30,10 +30,12 @@ pipeline {
         stage('Login openshift') {
             steps {
                 withCredentials([string(credentialsId: '18e7aeb8-5552-4cbb-bf66-2402ca6772de', variable: 'TOKEN')]) {
-                    sh '''
-                        export KUBECONFIG="./kubeconfig"
-                        oc login --insecure-skip-tls-verify --token=$TOKEN $OPENSHIFT_URL
-                    '''
+                    dir("${env.WORKSPACE}/pac/"){
+                        sh '''
+                            export KUBECONFIG="./kubeconfig"
+                            oc login --insecure-skip-tls-verify --token=$TOKEN $OPENSHIFT_URL
+                        '''
+                    }
                     readFile('kubeconfig')
                 }
             }
@@ -51,7 +53,7 @@ pipeline {
             steps{
                 dir("${env.WORKSPACE}/pac/"){
                     sh """
-                        oc create -f ./deploymentConfig.yaml -ntest
+                        oc create -f ./robot-deployment.yml -ntest
                     """
                 }
             }
@@ -59,10 +61,12 @@ pipeline {
 
         stage("Run tests"){
             steps{
-                sh """
-                    oc cp ../tests robot-framework:/tests
-                    oc -ntest exec -it robot-deployment -- /bin/bash -c "robot ./tests/feature/user_register.robot"
-                """
+                dir("${env.WORKSPACE}/pac/"){
+                    sh """
+                        oc cp ../tests robot-framework:/tests
+                        oc -ntest exec -it robot-deployment -- /bin/bash -c "robot ./tests/feature/user_register.robot"
+                    """
+                }
             }
         }
     }
