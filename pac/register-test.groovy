@@ -49,9 +49,11 @@ pipeline {
 
         stage("Build container"){
             steps{
-                sh """
-                    oc create -f deploymentConfig.yaml -ntest
-                """
+                dir("${env.WORKSPACE}/pac/"){
+                    sh """
+                        oc create -f ./deploymentConfig.yaml -ntest
+                    """
+                }
             }
         }
 
