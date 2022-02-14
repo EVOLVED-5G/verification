@@ -2,17 +2,19 @@
 Documentation    This resource file contains the basic requests used by Capif. _HOSTNAME and CAPIF_AUTH can be set as global variables, depends on environment used
 Library          RequestsLibrary
 Library          Collections
+Variables        /opt/robot-tests/tests/libraries/ConfigVariables.py  CONFIG  /opt/robot-tests/tests/resources/Config.ini
 
 *** Variables ***
 ${DUMMY_NETAPP_HOSTNAME}    dummy-netapp-evolved5g.apps-dev.hi.inet
 ${CAPIF_AUTH}
+${CAPIF_HOSTNAME}           ${CONFIG.credentials.capif_ip}:${CONFIG.credentials.capif_port}
 
 *** keywords ***
 Create CAPIF Session
     [Arguments]    ${server}=${NONE}    ${auth}=${NONE}
 
     Run Keyword If    "${server}" != "${NONE}"    Create Session    apisession    ${server}            verify=True
-    ...               ELSE                        Create Session    apisession    ${DUMMY_NETAPP_HOSTNAME}    verify=True
+    ...               ELSE                        Create Session    apisession    ${CAPIF_HOSTNAME}    verify=True
 
     ${headers}=    Run Keyword If    "${CAPIF_BEARER}" != ""                                   Create Dictionary    Authorization=Bearer ${CAPIF_BEARER}    
     ...            ELSE IF           "${auth}" != "${NONE}"                                    Create Dictionary    Authorization=Basic ${auth}
@@ -65,7 +67,7 @@ Register User At Jwt Auth
 
     &{body}=    Create Dictionary    password=${password}    username=${username}    role=${role}    description=${description}
 
-    Create Session    jwtsession    ${DUMMY_NETAPP_HOSTNAME}     verify=True
+    Create Session    jwtsession    ${CAPIF_HOSTNAME}     verify=True
 
     ${resp}=    POST On Session    jwtsession    /register    json=${body}
 
@@ -91,7 +93,7 @@ Get Token For User
     [Return]    ${resp.json()["access_token"]}
 
 Clean Test Information By HTTP Requests
-    Create Session    jwtsession    ${DUMMY_NETAPP_HOSTNAME}     verify=True
+    Create Session    jwtsession    http://${CAPIF_HOSTNAME}     verify=True
 
     ${resp}=                      DELETE On Session      jwtsession    /testusers
     Should Be Equal As Strings    ${resp.status_code}    200
