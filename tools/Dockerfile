@@ -1,6 +1,6 @@
 FROM ubuntu:20.04
 
-LABEL version="1.0"
+LABEL version="1.1"
 LABEL description="Docker to run Robot Framework"
 
 ENV ROBOT_DIRECTORY=/opt/robot-tests
@@ -14,7 +14,6 @@ RUN mkdir $ROBOT_DIRECTORY
 RUN mkdir $ROBOT_COMMON_DIRECTORY
 RUN mkdir $ROBOT_TESTS_DIRECTORY
 RUN mkdir $ROBOT_RESULTS_DIRECTORY
-
 
 # Create Volumes for docker
 VOLUME $ROBOT_DIRECTORY
@@ -44,6 +43,11 @@ RUN apt-get install -y --no-install-recommends  \
 RUN add-apt-repository ppa:deadsnakes/ppa
 RUN apt-get install -y python3.9 python3.9-venv python3.9-dev
 
-RUN pip install --upgrade pip && \
-    pip install --upgrade robotframework
+RUN pip install --upgrade pip \
+    robotframework && \
+    pip install pandas \
+    robotframework-requests \
+    ConfigParser 
+
+RUN cp /usr/lib/python3.8/configparser.py /usr/lib/python3.8/ConfigParser.py
  
