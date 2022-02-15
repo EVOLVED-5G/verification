@@ -44,6 +44,7 @@ RUN apt-get install -y python3.9 python3.9-venv python3.9-dev
 RUN pip install --upgrade pip \
     robotframework && \
     pip install pandas \
+    pip install redis \
     robotframework-requests \
     ConfigParser 
 
