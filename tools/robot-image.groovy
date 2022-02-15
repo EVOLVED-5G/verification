@@ -31,7 +31,7 @@ pipeline {
                 expression { GENERATE_ROBOT == 'true' }
             }
             steps {
-                dir ("${WORKSPACE}/tools/robot") {
+                dir ("${WORKSPACE}/tools") {
                     withCredentials([usernamePassword(
                     credentialsId: 'docker_pull_cred',
                     usernameVariable: 'USER',
