@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0 (Python 3.8.10 on linux)" generated="20220602 09:18:02.593" rpa="false" schemaversion="3">
+<suite id="s1" name="Nef Monitoring Events Tests" source="/opt/robot-tests/tests/nef_monitoring_events/nef_monitoring_events_tests.robot">
+<test id="s1-t1" name="Create subscription by Authorized NetApp" line="19">
+<kw name="Run Keyword" library="BuiltIn">
+<var>${access_token}</var>
+<arg>netapp_to_nef.register_netapp_to_nef</arg>
+<arg>${CONFIG.credentials.nef_ip}</arg>
+<arg>${CONFIG.credentials.nef_port}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<kw name="Register Netapp To Nef" library="netapp_to_nef">
+<arg>${CONFIG.credentials.nef_ip}</arg>
+<arg>${CONFIG.credentials.nef_port}</arg>
+<status status="PASS" starttime="20220602 09:18:02.772" endtime="20220602 09:18:03.000"/>
+</kw>
+<msg timestamp="20220602 09:18:03.001" level="INFO">${access_token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTQ4NTI2ODIsInN1YiI6IjEifQ.cyCJ6kE467BmnMNisW7BxDuWjD4UcBYEUeOBrYp1gRo</msg>
+<status status="PASS" starttime="20220602 09:18:02.772" endtime="20220602 09:18:03.001"/>
+</kw>
+<kw name="Run Keyword" library="BuiltIn">
+<var>${resp}</var>
+<arg>netapp_to_nef.monitor_subscription</arg>
+<arg>${CONFIG.credentials.nef_ip}</arg>
+<arg>${CONFIG.credentials.nef_port}</arg>
+<arg>${CONFIG.credentials.callback_ip}</arg>
+<arg>${CONFIG.credentials.nef_callback_port}</arg>
+<arg>2</arg>
+<arg>${access_token}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<kw name="Monitor Subscription" library="netapp_to_nef">
+<arg>${CONFIG.credentials.nef_ip}</arg>
+<arg>${CONFIG.credentials.nef_port}</arg>
+<arg>${CONFIG.credentials.callback_ip}</arg>
+<arg>${CONFIG.credentials.nef_callback_port}</arg>
+<arg>2</arg>
+<arg>${access_token}</arg>
+<status status="PASS" starttime="20220602 09:18:03.002" endtime="20220602 09:18:03.112"/>
+</kw>
+<msg timestamp="20220602 09:18:03.112" level="INFO">${resp} = &lt;Response [201]&gt;</msg>
+<status status="PASS" starttime="20220602 09:18:03.001" endtime="20220602 09:18:03.112"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${resp.text}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220602 09:18:03.112" endtime="20220602 09:18:03.114"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${resp}.['status_code']</arg>
+<arg>201</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20220602 09:18:03.114" endtime="20220602 09:18:03.114"/>
+</kw>
+<tag>Create_subscription_by_Authorized_NetApp</tag>
+<status status="PASS" starttime="20220602 09:18:02.771" endtime="20220602 09:18:03.115"/>
+</test>
+<test id="s1-t2" name="One-time request to the Monitoring Event API by Authorized NetApp" line="32">
+<kw name="Run Keyword" library="BuiltIn">
+<var>${access_token}</var>
+<arg>netapp_to_nef.register_netapp_to_nef</arg>
+<arg>${CONFIG.credentials.nef_ip}</arg>
+<arg>${CONFIG.credentials.nef_port}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<kw name="Register Netapp To Nef" library="netapp_to_nef">
+<arg>${CONFIG.credentials.nef_ip}</arg>
+<arg>${CONFIG.credentials.nef_port}</arg>
+<status status="PASS" starttime="20220602 09:18:03.116" endtime="20220602 09:18:03.349"/>
+</kw>
+<msg timestamp="20220602 09:18:03.349" level="INFO">${access_token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTQ4NTI2ODMsInN1YiI6IjEifQ.oCfwSlEHnkd4xTZIU-QWR55aRX4KACm0D98l54CUzoQ</msg>
+<status status="PASS" starttime="20220602 09:18:03.116" endtime="20220602 09:18:03.349"/>
+</kw>
+<kw name="Run Keyword" library="BuiltIn">
+<var>${resp}</var>
+<arg>netapp_to_nef.monitor_subscription</arg>
+<arg>${CONFIG.credentials.nef_ip}</arg>
+<arg>${CONFIG.credentials.nef_port}</arg>
+<arg>${CONFIG.credentials.callback_ip}</arg>
+<arg>${CONFIG.credentials.nef_callback_port}</arg>
+<arg>1</arg>
+<arg>${access_token}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<kw name="Monitor Subscription" library="netapp_to_nef">
+<arg>${CONFIG.credentials.nef_ip}</arg>
+<arg>${CONFIG.credentials.nef_port}</arg>
+<arg>${CONFIG.credentials.callback_ip}</arg>
+<arg>${CONFIG.credentials.nef_callback_port}</arg>
+<arg>1</arg>
+<arg>${access_token}</arg>
+<status status="PASS" starttime="20220602 09:18:03.350" endtime="20220602 09:18:03.363"/>
+</kw>
+<msg timestamp="20220602 09:18:03.363" level="INFO">${resp} = &lt;Response [409]&gt;</msg>
+<status status="PASS" starttime="20220602 09:18:03.349" endtime="20220602 09:18:03.363"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${resp.text}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220602 09:18:03.363" endtime="20220602 09:18:03.364"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${resp}.['status_code']</arg>
+<arg>201</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<msg timestamp="20220602 09:18:03.365" level="FAIL">'&lt;Response [409]&gt;.['status_code']' does not contain '201'</msg>
+<status status="FAIL" starttime="20220602 09:18:03.365" endtime="20220602 09:18:03.365"/>
+</kw>
+<tag>One_time_request_subscription_by_Authorized_NetApp</tag>
+<status status="FAIL" starttime="20220602 09:18:03.115" endtime="20220602 09:18:03.366">'&lt;Response [409]&gt;.['status_code']' does not contain '201'</status>
+</test>
+<test id="s1-t3" name="Create subscription when there is already an active subscription for a registered UE" line="45">
+<kw name="Run Keyword" library="BuiltIn">
+<var>${access_token}</var>
+<arg>netapp_to_nef.register_netapp_to_nef</arg>
+<arg>${CONFIG.credentials.nef_ip}</arg>
+<arg>${CONFIG.credentials.nef_port}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<kw name="Register Netapp To Nef" library="netapp_to_nef">
+<arg>${CONFIG.credentials.nef_ip}</arg>
+<arg>${CONFIG.credentials.nef_port}</arg>
+<status status="PASS" starttime="20220602 09:18:03.367" endtime="20220602 09:18:03.609"/>
+</kw>
+<msg timestamp="20220602 09:18:03.609" level="INFO">${access_token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTQ4NTI2ODMsInN1YiI6IjEifQ.oCfwSlEHnkd4xTZIU-QWR55aRX4KACm0D98l54CUzoQ</msg>
+<status status="PASS" starttime="20220602 09:18:03.367" endtime="20220602 09:18:03.609"/>
+</kw>
+<kw name="Run Keyword" library="BuiltIn">
+<var>${resp}</var>
+<arg>netapp_to_nef.monitor_subscription</arg>
+<arg>${CONFIG.credentials.nef_ip}</arg>
+<arg>${CONFIG.credentials.nef_port}</arg>
+<arg>${CONFIG.credentials.callback_ip}</arg>
+<arg>${CONFIG.credentials.nef_callback_port}</arg>
+<arg>2</arg>
+<arg>${access_token}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<kw name="Monitor Subscription" library="netapp_to_nef">
+<arg>${CONFIG.credentials.nef_ip}</arg>
+<arg>${CONFIG.credentials.nef_port}</arg>
+<arg>${CONFIG.credentials.callback_ip}</arg>
+<arg>${CONFIG.credentials.nef_callback_port}</arg>
+<arg>2</arg>
+<arg>${access_token}</arg>
+<status status="PASS" starttime="20220602 09:18:03.610" endtime="20220602 09:18:03.623"/>
+</kw>
+<msg timestamp="20220602 09:18:03.623" level="INFO">${resp} = &lt;Response [409]&gt;</msg>
+<status status="PASS" starttime="20220602 09:18:03.609" endtime="20220602 09:18:03.623"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${resp.text}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220602 09:18:03.623" endtime="20220602 09:18:03.625"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${resp}.['status_code']</arg>
+<arg>409</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20220602 09:18:03.625" endtime="20220602 09:18:03.625"/>
+</kw>
+<tag>Create_subscription_when_already_active_by_Authorized_NetApp</tag>
+<status status="PASS" starttime="20220602 09:18:03.367" endtime="20220602 09:18:03.625"/>
+</test>
+<test id="s1-t4" name="Create subscription by unAuthorized NetApp" line="58">
+<kw name="Run Keyword" library="BuiltIn">
+<var>${resp}</var>
+<arg>netapp_to_nef.monitor_subscription</arg>
+<arg>${CONFIG.credentials.nef_ip}</arg>
+<arg>${CONFIG.credentials.nef_port}</arg>
+<arg>${CONFIG.credentials.callback_ip}</arg>
+<arg>${CONFIG.credentials.nef_callback_port}</arg>
+<arg>2</arg>
+<arg>${non-auth}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<kw name="Monitor Subscription" library="netapp_to_nef">
+<arg>${CONFIG.credentials.nef_ip}</arg>
+<arg>${CONFIG.credentials.nef_port}</arg>
+<arg>${CONFIG.credentials.callback_ip}</arg>
+<arg>${CONFIG.credentials.nef_callback_port}</arg>
+<arg>2</arg>
+<arg>${non-auth}</arg>
+<status status="PASS" starttime="20220602 09:18:03.627" endtime="20220602 09:18:03.635"/>
+</kw>
+<msg timestamp="20220602 09:18:03.635" level="INFO">${resp} = &lt;Response [403]&gt;</msg>
+<status status="PASS" starttime="20220602 09:18:03.626" endtime="20220602 09:18:03.635"/>
+</kw>
+<kw name="Log To Console" library="BuiltIn">
+<arg>${resp.text}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" starttime="20220602 09:18:03.636" endtime="20220602 09:18:03.637"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${resp}.['status_code']</arg>
+<arg>401</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<msg timestamp="20220602 09:18:03.638" level="FAIL">'&lt;Response [403]&gt;.['status_code']' does not contain '401'</msg>
+<status status="FAIL" starttime="20220602 09:18:03.637" endtime="20220602 09:18:03.638"/>
+</kw>
+<tag>Create_subscription_when_already_active_by_Authorized_NetApp</tag>
+<status status="FAIL" starttime="20220602 09:18:03.626" endtime="20220602 09:18:03.638">'&lt;Response [403]&gt;.['status_code']' does not contain '401'</status>
+</test>
+<doc>This test file contains the test cases of monitoring events API functions in dummy netapp, refering to Nef API.</doc>
+<status status="FAIL" starttime="20220602 09:18:02.597" endtime="20220602 09:18:03.639"/>
+</suite>
+<statistics>
+<total>
+<stat pass="2" fail="2" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0" skip="0">Create_subscription_by_Authorized_NetApp</stat>
+<stat pass="1" fail="1" skip="0">Create_subscription_when_already_active_by_Authorized_NetApp</stat>
+<stat pass="0" fail="1" skip="0">One_time_request_subscription_by_Authorized_NetApp</stat>
+</tag>
+<suite>
+<stat pass="2" fail="2" skip="0" id="s1" name="Nef Monitoring Events Tests">Nef Monitoring Events Tests</stat>
+</suite>
+</statistics>
+<errors>
+<msg timestamp="20220602 09:18:02.759" level="ERROR">Error in file '/opt/robot-tests/resources/common/basicFunctions.robot' on line 8: Variable file '/opt/robot-tests/tests/libraries/ConfigVariables.py' does not exist.</msg>
+</errors>
+</robot>

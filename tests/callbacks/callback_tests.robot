@@ -1,0 +1,49 @@
+*** Settings ***
+Library         RequestsLibrary
+Library         Collections
+
+*** Variables ***
+${APF_ID_NOT_VALID}         not-valid
+${CAPIF_HOSTNAME}           http://dummy-netapp_capif_callback_server_1:8080
+${NEF_HOSTNAME}             http://dummy-netapp_nef_callback_server_1:8080
+
+*** Keywords ***
+
+capifcallback
+
+    Create Session    mysession    ${CAPIF_HOSTNAME}     verify=True
+
+    ${resp}=    POST On Session    mysession    /capifcallbacks    
+
+    return ${resp}
+
+nefcallback
+
+    Create Session    mysession    ${NEF_HOSTNAME}     verify=True
+
+    ${resp}=    POST On Session    mysession    /nefcallbacks    
+
+    return ${resp}
+
+
+*** Test Cases ***
+
+Capif Callback Server Test Case
+
+    [Tags]    capif_callback_server
+
+    ${resp}=      Run Keyword    capifcallback    
+
+    Should Contain    ${resp}    201
+
+    Log To Console    ${resp.message}
+
+Nef Callback Server Test Case
+
+    [Tags]    nef_callback_server
+
+    ${resp}=      Run Keyword    nefcallback    
+
+    Should Contain    ${resp}    201
+
+    Log To Console    ${resp.message}

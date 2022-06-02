@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 5.0 (Python 3.8.10 on linux)" generated="20220601 14:20:14.069" rpa="false" schemaversion="3">
+<suite id="s1" name="Publish Services Tests" source="/opt/robot-tests/tests/capif_publish_services/publish_services_tests.robot">
+<test id="s1-t1" name="Publish API by Authorised API Publisher" line="16">
+<kw name="Run Keyword" library="BuiltIn">
+<var>${resp}</var>
+<arg>Apf_register</arg>
+<arg>${CONFIG.credentials.capif_ip}</arg>
+<arg>${CONFIG.credentials.capif_port}</arg>
+<arg>${CONFIG.credentials.apf_username}</arg>
+<arg>${CONFIG.credentials.apf_password}</arg>
+<arg>${CONFIG.credentials.apf_role}</arg>
+<arg>${CONFIG.credentials.apf_description}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<kw name="Apf_register" library="basicFunctions">
+<arg>${CONFIG.credentials.capif_ip}</arg>
+<arg>${CONFIG.credentials.capif_port}</arg>
+<arg>${CONFIG.credentials.apf_username}</arg>
+<arg>${CONFIG.credentials.apf_password}</arg>
+<arg>${CONFIG.credentials.apf_role}</arg>
+<arg>${CONFIG.credentials.apf_description}</arg>
+<kw name="Copy File" library="OperatingSystem">
+<arg>/opt/robot-tests/pythonnetapp/service_api_description.json</arg>
+<arg>.</arg>
+<doc>Copies the source file into the destination.</doc>
+<msg timestamp="20220601 14:20:14.286" level="INFO" html="true">Copied file from '&lt;a href="file:///opt/robot-tests/pythonnetapp/service_api_description.json"&gt;/opt/robot-tests/pythonnetapp/service_api_description.json&lt;/a&gt;' to '&lt;a href="file:///opt/robot-tests/tests/capif_publish_services/service_api_description.json"&gt;/opt/robot-tests/tests/capif_publish_services/service_api_description.json&lt;/a&gt;'.</msg>
+<status status="PASS" starttime="20220601 14:20:14.263" endtime="20220601 14:20:14.286"/>
+</kw>
+<kw name="Register Apf To Capif" library="apf_to_capif">
+<var>${resp}</var>
+<arg>${CONFIG.credentials.capif_ip}</arg>
+<arg>${CONFIG.credentials.capif_port}</arg>
+<arg>${CONFIG.credentials.apf_username}</arg>
+<arg>${CONFIG.credentials.apf_password}</arg>
+<arg>${CONFIG.credentials.apf_role}</arg>
+<arg>${CONFIG.credentials.apf_description}</arg>
+<msg timestamp="20220601 14:20:14.771" level="INFO">${resp} = 3a462c904e13c6</msg>
+<status status="PASS" starttime="20220601 14:20:14.286" endtime="20220601 14:20:14.771"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${api_apf_id}</arg>
+<arg>${resp}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20220601 14:20:14.773" level="INFO">${api_apf_id} = 3a462c904e13c6</msg>
+<status status="PASS" starttime="20220601 14:20:14.771" endtime="20220601 14:20:14.773"/>
+</kw>
+<status status="PASS" starttime="20220601 14:20:14.261" endtime="20220601 14:20:14.773"/>
+</kw>
+<msg timestamp="20220601 14:20:14.773" level="INFO">${resp} = 3a462c904e13c6</msg>
+<status status="PASS" starttime="20220601 14:20:14.261" endtime="20220601 14:20:14.773"/>
+</kw>
+<kw name="Set Global Variable" library="BuiltIn">
+<arg>${apfId}</arg>
+<arg>${resp}</arg>
+<doc>Makes a variable available globally in all tests and suites.</doc>
+<msg timestamp="20220601 14:20:14.774" level="INFO">${apfId} = 3a462c904e13c6</msg>
+<status status="PASS" starttime="20220601 14:20:14.773" endtime="20220601 14:20:14.774"/>
+</kw>
+<kw name="Run Keyword" library="BuiltIn">
+<var>${access_token_apf}</var>
+<arg>Token_case_apf</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<kw name="Token_case_apf" library="basicFunctions">
+<kw name="Get Capif Token" library="apf_to_capif">
+<var>${resp}</var>
+<arg>${CONFIG.credentials.capif_ip}</arg>
+<arg>${CONFIG.credentials.capif_port}</arg>
+<arg>${CONFIG.credentials.apf_username}</arg>
+<arg>${CONFIG.credentials.apf_password}</arg>
+<arg>${CONFIG.credentials.apf_role}</arg>
+<msg timestamp="20220601 14:20:14.785" level="INFO">${resp} = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1NDA5MzIxNCwianRpIjoiNjEzY2QzZjktNzUzMC00NDVlLTk0OWMtNDJmMmVjMzRmN2Q3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImR1bW15Y3VzdG9tYXBmIGFwZiIsIm5...</msg>
+<status status="PASS" starttime="20220601 14:20:14.775" endtime="20220601 14:20:14.785"/>
+</kw>
+<status status="PASS" starttime="20220601 14:20:14.775" endtime="20220601 14:20:14.785"/>
+</kw>
+<msg timestamp="20220601 14:20:14.785" level="INFO">${access_token_apf} = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1NDA5MzIxNCwianRpIjoiNjEzY2QzZjktNzUzMC00NDVlLTk0OWMtNDJmMmVjMzRmN2Q3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImR1bW15Y3VzdG9tYXBmIGFwZiIsIm5...</msg>
+<status status="PASS" starttime="20220601 14:20:14.775" endtime="20220601 14:20:14.785"/>
+</kw>
+<kw name="Run Keyword" library="BuiltIn">
+<var>${resp}</var>
+<arg>Publish services</arg>
+<arg>${CONFIG.credentials.capif_ip}</arg>
+<arg>${CONFIG.credentials.capif_port}</arg>
+<arg>${api_apf_id}</arg>
+<arg>${access_token_apf}</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<kw name="Publish services" library="basicFunctions">
+<arg>${CONFIG.credentials.capif_ip}</arg>
+<arg>${CONFIG.credentials.capif_port}</arg>
+<arg>${api_apf_id}</arg>
+<arg>${access_token_apf}</arg>
+<kw name="Publish Service Api To Capif" library="apf_to_capif">
+<var>${resp}</var>
+<arg>${CONFIG.credentials.capif_ip}</arg>
+<arg>${CONFIG.credentials.capif_port}</arg>
+<arg>${api_invoker_id}</arg>
+<arg>${access_token}</arg>
+<msg timestamp="20220601 14:20:14.854" level="INFO">${resp} = 8a620261b6f35e3089c2fbc0e7b227</msg>
+<status status="PASS" starttime="20220601 14:20:14.787" endtime="20220601 14:20:14.855"/>
+</kw>
+<status status="PASS" starttime="20220601 14:20:14.786" endtime="20220601 14:20:14.855"/>
+</kw>
+<msg timestamp="20220601 14:20:14.855" level="INFO">${resp} = 8a620261b6f35e3089c2fbc0e7b227</msg>
+<status status="PASS" starttime="20220601 14:20:14.786" endtime="20220601 14:20:14.855"/>
+</kw>
+<tag>capif_api_publish_service_by_auth_api_pub</tag>
+<status status="PASS" starttime="20220601 14:20:14.260" endtime="20220601 14:20:14.855"/>
+</test>
+<test id="s1-t2" name="Publish API by NON Authorised API Publisher" line="29">
+<kw name="Run Keyword" library="BuiltIn">
+<var>${access_token_apf}</var>
+<arg>Token_case_apf</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<kw name="Token_case_apf" library="basicFunctions">
+<kw name="Get Capif Token" library="apf_to_capif">
+<var>${resp}</var>
+<arg>${CONFIG.credentials.capif_ip}</arg>
+<arg>${CONFIG.credentials.capif_port}</arg>
+<arg>${CONFIG.credentials.apf_username}</arg>
+<arg>${CONFIG.credentials.apf_password}</arg>
+<arg>${CONFIG.credentials.apf_role}</arg>
+<msg timestamp="20220601 14:20:14.867" level="INFO">${resp} = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1NDA5MzIxNCwianRpIjoiMzdjNjExNDAtOTliMi00YTEwLWIxNjEtMDE5ZmMyYmQzZGUyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImR1bW15Y3VzdG9tYXBmIGFwZiIsIm5...</msg>
+<status status="PASS" starttime="20220601 14:20:14.857" endtime="20220601 14:20:14.867"/>
+</kw>
+<status status="PASS" starttime="20220601 14:20:14.856" endtime="20220601 14:20:14.867"/>
+</kw>
+<msg timestamp="20220601 14:20:14.867" level="INFO">${access_token_apf} = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1NDA5MzIxNCwianRpIjoiMzdjNjExNDAtOTliMi00YTEwLWIxNjEtMDE5ZmMyYmQzZGUyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImR1bW15Y3VzdG9tYXBmIGFwZiIsIm5...</msg>
+<status status="PASS" starttime="20220601 14:20:14.856" endtime="20220601 14:20:14.867"/>
+</kw>
+<kw name="Run Keyword And Expect Error" library="BuiltIn">
+<var>${resp}</var>
+<arg>*</arg>
+<arg>Publish services</arg>
+<arg>${CONFIG.credentials.capif_ip}</arg>
+<arg>${CONFIG.credentials.capif_port}</arg>
+<arg>${APF_ID_NOT_VALID}</arg>
+<arg>${access_token_apf}</arg>
+<doc>Runs the keyword and checks that the expected error occurred.</doc>
+<kw name="Publish services" library="basicFunctions">
+<arg>${CONFIG.credentials.capif_ip}</arg>
+<arg>${CONFIG.credentials.capif_port}</arg>
+<arg>${APF_ID_NOT_VALID}</arg>
+<arg>${access_token_apf}</arg>
+<kw name="Publish Service Api To Capif" library="apf_to_capif">
+<var>${resp}</var>
+<arg>${CONFIG.credentials.capif_ip}</arg>
+<arg>${CONFIG.credentials.capif_port}</arg>
+<arg>${api_invoker_id}</arg>
+<arg>${access_token}</arg>
+<msg timestamp="20220601 14:20:14.897" level="FAIL">({'title': 'Unauthorized', 'status': 401, 'detail': 'APF not existing', 'cause': 'APF id not found'}, 401)</msg>
+<status status="FAIL" starttime="20220601 14:20:14.868" endtime="20220601 14:20:14.900"/>
+</kw>
+<status status="FAIL" starttime="20220601 14:20:14.868" endtime="20220601 14:20:14.900"/>
+</kw>
+<msg timestamp="20220601 14:20:14.901" level="INFO">${resp} = ({'title': 'Unauthorized', 'status': 401, 'detail': 'APF not existing', 'cause': 'APF id not found'}, 401)</msg>
+<status status="PASS" starttime="20220601 14:20:14.867" endtime="20220601 14:20:14.901"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${resp}</arg>
+<arg>401</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<status status="PASS" starttime="20220601 14:20:14.901" endtime="20220601 14:20:14.902"/>
+</kw>
+<tag>capif_api_publish_service_by_non_auth_api_pub</tag>
+<status status="PASS" starttime="20220601 14:20:14.856" endtime="20220601 14:20:14.902"/>
+</test>
+<test id="s1-t3" name="Retrieve all APIs Published by Authorised apfId" line="40">
+<kw name="Run Keyword" library="BuiltIn">
+<var>${access_token_apf}</var>
+<arg>Token_case_apf</arg>
+<doc>Executes the given keyword with the given arguments.</doc>
+<kw name="Token_case_apf" library="basicFunctions">
+<kw name="Get Capif Token" library="apf_to_capif">
+<var>${resp}</var>
+<arg>${CONFIG.credentials.capif_ip}</arg>
+<arg>${CONFIG.credentials.capif_port}</arg>
+<arg>${CONFIG.credentials.apf_username}</arg>
+<arg>${CONFIG.credentials.apf_password}</arg>
+<arg>${CONFIG.credentials.apf_role}</arg>
+<msg timestamp="20220601 14:20:14.913" level="INFO">${resp} = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1NDA5MzIxNCwianRpIjoiNTc4NTFkNmItOTcxYi00NDJmLTlkZjMtZDA4NDdlODVlODEwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImR1bW15Y3VzdG9tYXBmIGFwZiIsIm5...</msg>
+<status status="PASS" starttime="20220601 14:20:14.903" endtime="20220601 14:20:14.913"/>
+</kw>
+<status status="PASS" starttime="20220601 14:20:14.903" endtime="20220601 14:20:14.913"/>
+</kw>
+<msg timestamp="20220601 14:20:14.913" level="INFO">${access_token_apf} = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1NDA5MzIxNCwianRpIjoiNTc4NTFkNmItOTcxYi00NDJmLTlkZjMtZDA4NDdlODVlODEwIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImR1bW15Y3VzdG9tYXBmIGFwZiIsIm5...</msg>
+<status status="PASS" starttime="20220601 14:20:14.903" endtime="20220601 14:20:14.913"/>
+</kw>
+<kw name="Run Keyword And Expect Error" library="BuiltIn">
+<var>${resp}</var>
+<arg>*</arg>
+<arg>Publish services</arg>
+<arg>${CONFIG.credentials.capif_ip}</arg>
+<arg>${CONFIG.credentials.capif_port}</arg>
+<arg>${apfId}</arg>
+<arg>${access_token_apf}</arg>
+<doc>Runs the keyword and checks that the expected error occurred.</doc>
+<kw name="Publish services" library="basicFunctions">
+<arg>${CONFIG.credentials.capif_ip}</arg>
+<arg>${CONFIG.credentials.capif_port}</arg>
+<arg>${apfId}</arg>
+<arg>${access_token_apf}</arg>
+<kw name="Publish Service Api To Capif" library="apf_to_capif">
+<var>${resp}</var>
+<arg>${CONFIG.credentials.capif_ip}</arg>
+<arg>${CONFIG.credentials.capif_port}</arg>
+<arg>${api_invoker_id}</arg>
+<arg>${access_token}</arg>
+<msg timestamp="20220601 14:20:14.943" level="FAIL">({'title': 'Forbidden', 'status': 403, 'detail': 'Service already published', 'cause': 'Identical API name and AEF Profile IDs'}, 403)</msg>
+<status status="FAIL" starttime="20220601 14:20:14.915" endtime="20220601 14:20:14.945"/>
+</kw>
+<status status="FAIL" starttime="20220601 14:20:14.914" endtime="20220601 14:20:14.946"/>
+</kw>
+<msg timestamp="20220601 14:20:14.946" level="INFO">${resp} = ({'title': 'Forbidden', 'status': 403, 'detail': 'Service already published', 'cause': 'Identical API name and AEF Profile IDs'}, 403)</msg>
+<status status="PASS" starttime="20220601 14:20:14.914" endtime="20220601 14:20:14.946"/>
+</kw>
+<kw name="Should Contain" library="BuiltIn">
+<arg>${resp}</arg>
+<arg>200</arg>
+<doc>Fails if ``container`` does not contain ``item`` one or more times.</doc>
+<msg timestamp="20220601 14:20:14.947" level="FAIL">'({'title': 'Forbidden', 'status': 403, 'detail': 'Service already published', 'cause': 'Identical API name and AEF Profile IDs'}, 403)' does not contain '200'</msg>
+<status status="FAIL" starttime="20220601 14:20:14.946" endtime="20220601 14:20:14.947"/>
+</kw>
+<tag>retrieve_published_service_by_auth_apfId</tag>
+<status status="FAIL" starttime="20220601 14:20:14.902" endtime="20220601 14:20:14.947">'({'title': 'Forbidden', 'status': 403, 'detail': 'Service already published', 'cause': 'Identical API name and AEF Profile IDs'}, 403)' does not contain '200'</status>
+</test>
+<status status="FAIL" starttime="20220601 14:20:14.073" endtime="20220601 14:20:14.948"/>
+</suite>
+<statistics>
+<total>
+<stat pass="2" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+<stat pass="1" fail="0" skip="0">capif_api_publish_service_by_auth_api_pub</stat>
+<stat pass="1" fail="0" skip="0">capif_api_publish_service_by_non_auth_api_pub</stat>
+<stat pass="0" fail="1" skip="0">retrieve_published_service_by_auth_apfId</stat>
+</tag>
+<suite>
+<stat pass="2" fail="1" skip="0" id="s1" name="Publish Services Tests">Publish Services Tests</stat>
+</suite>
+</statistics>
+<errors>
+<msg timestamp="20220601 14:20:14.246" level="ERROR">Error in file '/opt/robot-tests/resources/common/basicFunctions.robot' on line 9: Variable file '/opt/robot-tests/tests/libraries/ConfigVariables.py' does not exist.</msg>
+</errors>
+</robot>

@@ -1,0 +1,77 @@
+==============================================================================
+20220509 07:15:22.349 - INFO - + START SUITE: Nef As Sessions Tests [ ]
+==============================================================================
+20220509 07:15:22.350 - INFO - +- START TEST: Create subscription by Authorized NetApp [ ]
+------------------------------------------------------------------------------
+20220509 07:15:22.351 - INFO - +-- START KEYWORD: BuiltIn.Run Keyword [ netapp_to_nef.register_netapp_to_nef | ${CONFIG.credentials.nef_ip} | ${CONFIG.credentials.nef_port} ]
+20220509 07:15:22.352 - INFO - +--- START KEYWORD: netapp_to_nef.Register Netapp To Nef [ ${CONFIG.credentials.nef_ip} | ${CONFIG.credentials.nef_port} ]
+20220509 07:15:22.631 - INFO - +--- END KEYWORD: netapp_to_nef.Register Netapp To Nef (279)
+20220509 07:15:22.631 - INFO - ${access_token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTI3NzE3MjIsInN1YiI6IjEifQ.yXtwEVcOuwo7ryL2c1PM4wqRLKSHj-a2tfS06jVq3F4
+20220509 07:15:22.632 - INFO - +-- END KEYWORD: BuiltIn.Run Keyword (281)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220509 07:15:22.633 - INFO - +-- START KEYWORD: BuiltIn.Run Keyword [ netapp_to_nef.sessionqos_subscription | ${CONFIG.credentials.nef_ip} | ${CONFIG.credentials.nef_port} | ${CONFIG.credentials.callback_ip} | ${CONFIG.credentials.nef_callback_port} | ${access_token} ]
+20220509 07:15:22.633 - INFO - +--- START KEYWORD: netapp_to_nef.Sessionqos Subscription [ ${CONFIG.credentials.nef_ip} | ${CONFIG.credentials.nef_port} | ${CONFIG.credentials.callback_ip} | ${CONFIG.credentials.nef_callback_port} | ${access_token} ]
+20220509 07:15:22.718 - INFO - +--- END KEYWORD: netapp_to_nef.Sessionqos Subscription (85)
+20220509 07:15:22.718 - INFO - ${resp} = {'ipv4Addr': '10.0.0.1', 'notificationDestination': 'http://host.docker.internal:8085/nefcallbacks', 'snssai': {'sst': 1, 'sd': '000001'}, 'dnn': 'province1.mnc01.mcc202.gprs', 'qosReference': 82, 'al...
+20220509 07:15:22.718 - INFO - +-- END KEYWORD: BuiltIn.Run Keyword (86)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220509 07:15:22.719 - INFO - +-- START KEYWORD: BuiltIn.Should Not Be Equal As Strings [ ${resp} | {'detail': 'Subscription for UE with ipv4Addr (10.0.0.1) already exists'} ]
+20220509 07:15:22.720 - INFO - Argument types are:
+<class 'dict'>
+<class 'str'>
+20220509 07:15:22.720 - INFO - +-- END KEYWORD: BuiltIn.Should Not Be Equal As Strings (1)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220509 07:15:22.720 - INFO - +-- START KEYWORD: BuiltIn.Should Not Be Equal As Strings [ ${resp} | {'detail': "UE with this external identifier doesn't exist"} ]
+20220509 07:15:22.721 - INFO - Argument types are:
+<class 'dict'>
+<class 'str'>
+20220509 07:15:22.721 - INFO - +-- END KEYWORD: BuiltIn.Should Not Be Equal As Strings (1)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220509 07:15:22.722 - INFO - +-- START KEYWORD: BuiltIn.Should Not Be Equal As Strings [ ${resp} | {'detail': 'Could not validate credentials'} ]
+20220509 07:15:22.722 - INFO - Argument types are:
+<class 'dict'>
+<class 'str'>
+20220509 07:15:22.722 - INFO - +-- END KEYWORD: BuiltIn.Should Not Be Equal As Strings (1)
+------------------------------------------------------------------------------
+20220509 07:15:22.723 - INFO - +- END TEST: Create subscription by Authorized NetApp (373)
+------------------------------------------------------------------------------
+20220509 07:15:22.724 - INFO - +- START TEST: Create subscription when there is already an active subscription for a registered UE [ ]
+------------------------------------------------------------------------------
+20220509 07:15:22.724 - INFO - +-- START KEYWORD: BuiltIn.Run Keyword [ netapp_to_nef.register_netapp_to_nef | ${CONFIG.credentials.nef_ip} | ${CONFIG.credentials.nef_port} ]
+20220509 07:15:22.725 - INFO - +--- START KEYWORD: netapp_to_nef.Register Netapp To Nef [ ${CONFIG.credentials.nef_ip} | ${CONFIG.credentials.nef_port} ]
+20220509 07:15:22.964 - INFO - +--- END KEYWORD: netapp_to_nef.Register Netapp To Nef (239)
+20220509 07:15:22.964 - INFO - ${access_token} = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NTI3NzE3MjIsInN1YiI6IjEifQ.yXtwEVcOuwo7ryL2c1PM4wqRLKSHj-a2tfS06jVq3F4
+20220509 07:15:22.965 - INFO - +-- END KEYWORD: BuiltIn.Run Keyword (241)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220509 07:15:22.965 - INFO - +-- START KEYWORD: BuiltIn.Run Keyword [ netapp_to_nef.sessionqos_subscription | ${CONFIG.credentials.nef_ip} | ${CONFIG.credentials.nef_port} | ${CONFIG.credentials.callback_ip} | ${CONFIG.credentials.nef_callback_port} | ${access_token} ]
+20220509 07:15:22.966 - INFO - +--- START KEYWORD: netapp_to_nef.Sessionqos Subscription [ ${CONFIG.credentials.nef_ip} | ${CONFIG.credentials.nef_port} | ${CONFIG.credentials.callback_ip} | ${CONFIG.credentials.nef_callback_port} | ${access_token} ]
+20220509 07:15:22.989 - INFO - +--- END KEYWORD: netapp_to_nef.Sessionqos Subscription (23)
+20220509 07:15:22.989 - INFO - ${resp} = {'detail': 'Subscription for UE with ipv4Addr (10.0.0.1) already exists'}
+20220509 07:15:22.990 - INFO - +-- END KEYWORD: BuiltIn.Run Keyword (24)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220509 07:15:22.990 - INFO - +-- START KEYWORD: BuiltIn.Should Be Equal As Strings [ ${resp} | {'detail': 'Subscription for UE with ipv4Addr (10.0.0.1) already exists'} ]
+20220509 07:15:22.991 - INFO - Argument types are:
+<class 'dict'>
+<class 'str'>
+20220509 07:15:22.991 - INFO - +-- END KEYWORD: BuiltIn.Should Be Equal As Strings (1)
+------------------------------------------------------------------------------
+20220509 07:15:22.992 - INFO - +- END TEST: Create subscription when there is already an active subscription for a registered UE (267)
+------------------------------------------------------------------------------
+20220509 07:15:22.992 - INFO - +- START TEST: Create subscription by unAuthorized NetApp [ ]
+------------------------------------------------------------------------------
+20220509 07:15:22.993 - INFO - +-- START KEYWORD: BuiltIn.Run Keyword [ netapp_to_nef.sessionqos_subscription | ${CONFIG.credentials.nef_ip} | ${CONFIG.credentials.nef_port} | ${CONFIG.credentials.callback_ip} | ${CONFIG.credentials.nef_callback_port} | ${non-auth} ]
+20220509 07:15:22.994 - INFO - +--- START KEYWORD: netapp_to_nef.Sessionqos Subscription [ ${CONFIG.credentials.nef_ip} | ${CONFIG.credentials.nef_port} | ${CONFIG.credentials.callback_ip} | ${CONFIG.credentials.nef_callback_port} | ${non-auth} ]
+20220509 07:15:23.006 - INFO - +--- END KEYWORD: netapp_to_nef.Sessionqos Subscription (12)
+20220509 07:15:23.007 - INFO - ${resp} = {'detail': 'Could not validate credentials'}
+20220509 07:15:23.007 - INFO - +-- END KEYWORD: BuiltIn.Run Keyword (14)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220509 07:15:23.008 - INFO - +-- START KEYWORD: BuiltIn.Should Be Equal As Strings [ ${resp} | {'detail': 'Could not validate credentials'} ]
+20220509 07:15:23.008 - INFO - Argument types are:
+<class 'dict'>
+<class 'str'>
+20220509 07:15:23.009 - INFO - +-- END KEYWORD: BuiltIn.Should Be Equal As Strings (1)
+------------------------------------------------------------------------------
+20220509 07:15:23.009 - INFO - +- END TEST: Create subscription by unAuthorized NetApp (17)
+------------------------------------------------------------------------------
+20220509 07:15:23.011 - INFO - + END SUITE: Nef As Sessions Tests (825)
+==============================================================================

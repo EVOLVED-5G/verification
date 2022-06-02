@@ -1,0 +1,260 @@
+==============================================================================
+20220503 13:13:28.884 - INFO - + START SUITE: Discover Services Tests [ ]
+==============================================================================
+20220503 13:13:28.886 - INFO - +- START TEST: Discover Published service APIs by Authorised API Invoker [ ]
+------------------------------------------------------------------------------
+20220503 13:13:28.887 - INFO - +-- START KEYWORD: BuiltIn.Run Keyword [ Apf_register | ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${CONFIG.credentials.apf_username} | ${CONFIG.credentials.apf_password} | ${CONFIG.credentials.apf_role} | ${CONFIG.credentials.apf_description} ]
+20220503 13:13:28.888 - INFO - +--- START KEYWORD: basicFunctions.Apf_register [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${CONFIG.credentials.apf_username} | ${CONFIG.credentials.apf_password} | ${CONFIG.credentials.apf_role} | ${CONFIG.credentials.apf_description} ]
+20220503 13:13:28.889 - INFO - +---- START KEYWORD: OperatingSystem.Copy File [ ../../../pythonnetapp/service_api_description.json | . ]
+20220503 13:13:28.916 - INFO - Copied file from '<a href="file:///opt/robot-tests/pythonnetapp/service_api_description.json">/opt/robot-tests/pythonnetapp/service_api_description.json</a>' to '<a href="file:///opt/robot-tests/tests/tests/capif_discover_services/service_api_description.json">/opt/robot-tests/tests/tests/capif_discover_services/service_api_description.json</a>'.
+20220503 13:13:28.917 - INFO - +---- END KEYWORD: OperatingSystem.Copy File (28)
+20220503 13:13:28.917 - INFO - +---- START KEYWORD: apf_to_capif.Register Apf To Capif [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${CONFIG.credentials.apf_username} | ${CONFIG.credentials.apf_password} | ${CONFIG.credentials.apf_role} | ${CONFIG.credentials.apf_description} ]
+20220503 13:13:28.962 - INFO - ${resp} = 73835e8b2658e5
+20220503 13:13:28.962 - INFO - +---- END KEYWORD: apf_to_capif.Register Apf To Capif (45)
+20220503 13:13:28.963 - INFO - +---- START KEYWORD: BuiltIn.Set Global Variable [ ${api_apf_id} | ${resp} ]
+20220503 13:13:28.964 - INFO - ${api_apf_id} = 73835e8b2658e5
+20220503 13:13:28.965 - INFO - +---- END KEYWORD: BuiltIn.Set Global Variable (2)
+20220503 13:13:28.965 - INFO - +--- END KEYWORD: basicFunctions.Apf_register (77)
+20220503 13:13:28.966 - INFO - +-- END KEYWORD: BuiltIn.Run Keyword (79)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220503 13:13:28.966 - INFO - +-- START KEYWORD: BuiltIn.Run Keyword [ Token_case_apf ]
+20220503 13:13:28.967 - INFO - +--- START KEYWORD: basicFunctions.Token_case_apf [ ]
+20220503 13:13:28.968 - INFO - +---- START KEYWORD: apf_to_capif.Get Capif Token [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${CONFIG.credentials.apf_username} | ${CONFIG.credentials.apf_password} | ${CONFIG.credentials.apf_role} ]
+20220503 13:13:28.981 - INFO - ${resp} = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1MTU4MzYwOCwianRpIjoiMjdhMGJhMTEtNGYwZS00YTBjLTk1NTMtMDMwNjIxYTg0NTYxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImR1bW15Y3VzdG9tYXBmIGFwZiIsIm5...
+20220503 13:13:28.981 - INFO - +---- END KEYWORD: apf_to_capif.Get Capif Token (13)
+20220503 13:13:28.982 - INFO - +--- END KEYWORD: basicFunctions.Token_case_apf (15)
+20220503 13:13:28.982 - INFO - ${access_token_apf} = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1MTU4MzYwOCwianRpIjoiMjdhMGJhMTEtNGYwZS00YTBjLTk1NTMtMDMwNjIxYTg0NTYxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImR1bW15Y3VzdG9tYXBmIGFwZiIsIm5...
+20220503 13:13:28.982 - INFO - +-- END KEYWORD: BuiltIn.Run Keyword (16)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220503 13:13:28.983 - INFO - +-- START KEYWORD: BuiltIn.Run Keyword [ Publish services | ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${api_apf_id} | ${access_token_apf} ]
+20220503 13:13:28.984 - INFO - +--- START KEYWORD: basicFunctions.Publish services [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${api_apf_id} | ${access_token_apf} ]
+20220503 13:13:28.984 - INFO - +---- START KEYWORD: apf_to_capif.Publish Service Api To Capif [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${api_invoker_id} | ${access_token} ]
+20220503 13:13:29.045 - INFO - ${resp} = ad451ca8b88dc98b9a53138773cdd4
+20220503 13:13:29.045 - INFO - +---- END KEYWORD: apf_to_capif.Publish Service Api To Capif (61)
+20220503 13:13:29.046 - INFO - +--- END KEYWORD: basicFunctions.Publish services (62)
+20220503 13:13:29.046 - INFO - +-- END KEYWORD: BuiltIn.Run Keyword (63)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220503 13:13:29.047 - INFO - +-- START KEYWORD: BuiltIn.Run Keyword [ DummyNetApp_register | ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${CONFIG.credentials.invoker_username} | ${CONFIG.credentials.invoker_password} | ${CONFIG.credentials.invoker_role} | ${CONFIG.credentials.invoker_description} ]
+20220503 13:13:29.047 - INFO - +--- START KEYWORD: basicFunctions.DummyNetApp_register [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${CONFIG.credentials.invoker_username} | ${CONFIG.credentials.invoker_password} | ${CONFIG.credentials.invoker_role} | ${CONFIG.credentials.invoker_description} ]
+20220503 13:13:29.048 - INFO - +---- START KEYWORD: netapp_to_capif.Register Netapp To Capif [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${CONFIG.credentials.invoker_username} | ${CONFIG.credentials.invoker_password} | ${CONFIG.credentials.invoker_role} | ${CONFIG.credentials.invoker_description} ]
+20220503 13:13:29.059 - INFO - ${resp} = bde3500b707a38
+20220503 13:13:29.059 - INFO - +---- END KEYWORD: netapp_to_capif.Register Netapp To Capif (11)
+20220503 13:13:29.060 - INFO - +---- START KEYWORD: BuiltIn.Set Global Variable [ ${api_invoker_id} | ${resp} ]
+20220503 13:13:29.061 - INFO - ${api_invoker_id} = bde3500b707a38
+20220503 13:13:29.061 - INFO - +---- END KEYWORD: BuiltIn.Set Global Variable (1)
+20220503 13:13:29.062 - INFO - +--- END KEYWORD: basicFunctions.DummyNetApp_register (15)
+20220503 13:13:29.062 - INFO - +-- END KEYWORD: BuiltIn.Run Keyword (15)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220503 13:13:29.063 - INFO - +-- START KEYWORD: BuiltIn.Run Keyword [ Token_case_invoker ]
+20220503 13:13:29.063 - INFO - +--- START KEYWORD: basicFunctions.Token_case_invoker [ ]
+20220503 13:13:29.063 - INFO - +---- START KEYWORD: netapp_to_capif.Get Capif Token [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${CONFIG.credentials.invoker_username} | ${CONFIG.credentials.invoker_password} | ${CONFIG.credentials.invoker_role} ]
+20220503 13:13:29.073 - INFO - ${resp} = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1MTU4MzYwOSwianRpIjoiZWYxOGM5YWQtNWJjOS00ZjE4LWFjMmEtMjgwYjc4YjM0MDc3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImR1bW15bmV0YXBwIGludm9rZXIiLCJ...
+20220503 13:13:29.074 - INFO - +---- END KEYWORD: netapp_to_capif.Get Capif Token (10)
+20220503 13:13:29.074 - INFO - +--- END KEYWORD: basicFunctions.Token_case_invoker (11)
+20220503 13:13:29.074 - INFO - ${access_token_invoker} = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1MTU4MzYwOSwianRpIjoiZWYxOGM5YWQtNWJjOS00ZjE4LWFjMmEtMjgwYjc4YjM0MDc3IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImR1bW15bmV0YXBwIGludm9rZXIiLCJ...
+20220503 13:13:29.075 - INFO - +-- END KEYWORD: BuiltIn.Run Keyword (13)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220503 13:13:29.076 - INFO - +-- START KEYWORD: BuiltIn.Run Keyword [ OnBoard_DummyNetApp_invoker ]
+20220503 13:13:29.076 - INFO - +--- START KEYWORD: basicFunctions.OnBoard_DummyNetApp_invoker [ ]
+20220503 13:13:29.077 - INFO - +---- START KEYWORD: OperatingSystem.Copy File [ ../../../pythonnetapp/invoker_details.json | . ]
+20220503 13:13:29.094 - INFO - Copied file from '<a href="file:///opt/robot-tests/pythonnetapp/invoker_details.json">/opt/robot-tests/pythonnetapp/invoker_details.json</a>' to '<a href="file:///opt/robot-tests/tests/tests/capif_discover_services/invoker_details.json">/opt/robot-tests/tests/tests/capif_discover_services/invoker_details.json</a>'.
+20220503 13:13:29.095 - INFO - +---- END KEYWORD: OperatingSystem.Copy File (18)
+20220503 13:13:29.095 - INFO - +---- START KEYWORD: netapp_to_capif.Get Capif Token [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${CONFIG.credentials.invoker_username} | ${CONFIG.credentials.invoker_password} | ${CONFIG.credentials.invoker_role} ]
+20220503 13:13:29.105 - INFO - ${access_token} = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1MTU4MzYwOSwianRpIjoiYTU2Mzg1ZGUtYTM5MC00YTU3LWJkYTYtMWRmMWZlNGY0YzAxIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImR1bW15bmV0YXBwIGludm9rZXIiLCJ...
+20220503 13:13:29.105 - INFO - +---- END KEYWORD: netapp_to_capif.Get Capif Token (10)
+20220503 13:13:29.106 - INFO - +---- START KEYWORD: netapp_to_capif.Onboard Netapp To Capif [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${access_token} ]
+20220503 13:13:29.171 - INFO - ${resp} = 0789cf2d2303c32201932bffee0337
+20220503 13:13:29.171 - INFO - +---- END KEYWORD: netapp_to_capif.Onboard Netapp To Capif (65)
+20220503 13:13:29.172 - INFO - +--- END KEYWORD: basicFunctions.OnBoard_DummyNetApp_invoker (96)
+20220503 13:13:29.172 - INFO - ${temp} = 0789cf2d2303c32201932bffee0337
+20220503 13:13:29.172 - INFO - +-- END KEYWORD: BuiltIn.Run Keyword (97)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220503 13:13:29.173 - INFO - +-- START KEYWORD: BuiltIn.Set Global Variable [ ${invId} | ${temp} ]
+20220503 13:13:29.174 - INFO - ${invId} = 0789cf2d2303c32201932bffee0337
+20220503 13:13:29.175 - INFO - +-- END KEYWORD: BuiltIn.Set Global Variable (2)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220503 13:13:29.175 - INFO - +-- START KEYWORD: BuiltIn.Run Keyword [ Discover services | ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${invId} | ${access_token_invoker} ]
+20220503 13:13:29.176 - INFO - +--- START KEYWORD: Discover services [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${invId} | ${access_token_invoker} ]
+20220503 13:13:29.176 - INFO - +---- START KEYWORD: netapp_to_capif.Discover Service Apis [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${id} | ${access_token} ]
+20220503 13:13:29.209 - INFO - ${resp} = [{'api_name': '3gpp-session-with-qos', 'api_id': 'ad451ca8b88dc98b9a53138773cdd4', 'aef_profiles': [{'aef_id': 'string', 'versions': [{'api_version': 'v1', 'expiry': {'$date': '2021-11-30T10:32:02.004...
+20220503 13:13:29.209 - INFO - +---- END KEYWORD: netapp_to_capif.Discover Service Apis (33)
+20220503 13:13:29.210 - INFO - +--- END KEYWORD: Discover services (34)
+20220503 13:13:29.210 - INFO - ${resp} = [{'api_name': '3gpp-session-with-qos', 'api_id': 'ad451ca8b88dc98b9a53138773cdd4', 'aef_profiles': [{'aef_id': 'string', 'versions': [{'api_version': 'v1', 'expiry': {'$date': '2021-11-30T10:32:02.004...
+20220503 13:13:29.211 - INFO - +-- END KEYWORD: BuiltIn.Run Keyword (35)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220503 13:13:29.211 - INFO - +-- START KEYWORD: BuiltIn.Log To Console [ ${resp} ]
+20220503 13:13:29.212 - INFO - +-- END KEYWORD: BuiltIn.Log To Console (1)
+------------------------------------------------------------------------------
+20220503 13:13:29.213 - INFO - +- END TEST: Discover Published service APIs by Authorised API Invoker (327)
+------------------------------------------------------------------------------
+20220503 13:13:29.213 - INFO - +- START TEST: Discover Published service APIs by Non Authorised API Invoker [ ]
+------------------------------------------------------------------------------
+20220503 13:13:29.214 - INFO - +-- START KEYWORD: BuiltIn.Run Keyword [ Token_case_invoker ]
+20220503 13:13:29.215 - INFO - +--- START KEYWORD: basicFunctions.Token_case_invoker [ ]
+20220503 13:13:29.215 - INFO - +---- START KEYWORD: netapp_to_capif.Get Capif Token [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${CONFIG.credentials.invoker_username} | ${CONFIG.credentials.invoker_password} | ${CONFIG.credentials.invoker_role} ]
+20220503 13:13:29.225 - INFO - ${resp} = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1MTU4MzYwOSwianRpIjoiZmRkODNhY2EtNDA5OS00NDg1LTg4ZGItMzRlYjc3OWU0NDM4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImR1bW15bmV0YXBwIGludm9rZXIiLCJ...
+20220503 13:13:29.226 - INFO - +---- END KEYWORD: netapp_to_capif.Get Capif Token (11)
+20220503 13:13:29.226 - INFO - +--- END KEYWORD: basicFunctions.Token_case_invoker (11)
+20220503 13:13:29.227 - INFO - ${access_token} = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1MTU4MzYwOSwianRpIjoiZmRkODNhY2EtNDA5OS00NDg1LTg4ZGItMzRlYjc3OWU0NDM4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImR1bW15bmV0YXBwIGludm9rZXIiLCJ...
+20220503 13:13:29.227 - INFO - +-- END KEYWORD: BuiltIn.Run Keyword (13)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220503 13:13:29.228 - INFO - +-- START KEYWORD: BuiltIn.Run Keyword And Expect Error [ * | Discover services | ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${invId} | ${non-auth} ]
+20220503 13:13:29.228 - INFO - +--- START KEYWORD: Discover services [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${invId} | ${non-auth} ]
+20220503 13:13:29.229 - INFO - +---- START KEYWORD: netapp_to_capif.Discover Service Apis [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${id} | ${access_token} ]
+20220503 13:13:29.239 - FAIL - ({'msg': 'Token has expired'}, 401)
+20220503 13:13:29.242 - DEBUG - Traceback (most recent call last):
+  File "/opt/robot-tests/pythonnetapp/netapp_to_capif.py", line 86, in discover_service_apis
+    response.raise_for_status()
+  File "/usr/lib/python3/dist-packages/requests/models.py", line 940, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 401 Client Error: UNAUTHORIZED for url: http://host.docker.internal:8080/service-apis/v1/allServiceAPIs?api-invoker-id=0789cf2d2303c32201932bffee0337
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/robot-tests/pythonnetapp/netapp_to_capif.py", line 92, in discover_service_apis
+    raise Exception(message, status)
+Exception: ({'msg': 'Token has expired'}, 401)
+20220503 13:13:29.243 - INFO - +---- END KEYWORD: netapp_to_capif.Discover Service Apis (13)
+20220503 13:13:29.243 - INFO - +--- END KEYWORD: Discover services (15)
+20220503 13:13:29.244 - INFO - ${resp} = ({'msg': 'Token has expired'}, 401)
+20220503 13:13:29.244 - INFO - +-- END KEYWORD: BuiltIn.Run Keyword And Expect Error (16)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220503 13:13:29.245 - INFO - +-- START KEYWORD: BuiltIn.Should Contain [ ${resp} | 401 ]
+20220503 13:13:29.245 - INFO - +-- END KEYWORD: BuiltIn.Should Contain (0)
+------------------------------------------------------------------------------
+20220503 13:13:29.246 - INFO - +- END TEST: Discover Published service APIs by Non Authorised API Invoker (33)
+------------------------------------------------------------------------------
+20220503 13:13:29.247 - INFO - +- START TEST: Discover Published service APIs by not registered API Invoker [ ]
+------------------------------------------------------------------------------
+20220503 13:13:29.248 - INFO - +-- START KEYWORD: BuiltIn.Run Keyword [ Token_case_invoker ]
+20220503 13:13:29.248 - INFO - +--- START KEYWORD: basicFunctions.Token_case_invoker [ ]
+20220503 13:13:29.249 - INFO - +---- START KEYWORD: netapp_to_capif.Get Capif Token [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${CONFIG.credentials.invoker_username} | ${CONFIG.credentials.invoker_password} | ${CONFIG.credentials.invoker_role} ]
+20220503 13:13:29.258 - INFO - ${resp} = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1MTU4MzYwOSwianRpIjoiMTFjMThjYjEtYmUzYy00NWQ3LTkxZjktYTFlNDIyYzRmODg4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImR1bW15bmV0YXBwIGludm9rZXIiLCJ...
+20220503 13:13:29.259 - INFO - +---- END KEYWORD: netapp_to_capif.Get Capif Token (10)
+20220503 13:13:29.260 - INFO - +--- END KEYWORD: basicFunctions.Token_case_invoker (12)
+20220503 13:13:29.260 - INFO - ${access_token} = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1MTU4MzYwOSwianRpIjoiMTFjMThjYjEtYmUzYy00NWQ3LTkxZjktYTFlNDIyYzRmODg4IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImR1bW15bmV0YXBwIGludm9rZXIiLCJ...
+20220503 13:13:29.260 - INFO - +-- END KEYWORD: BuiltIn.Run Keyword (12)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220503 13:13:29.261 - INFO - +-- START KEYWORD: BuiltIn.Run Keyword And Expect Error [ * | Discover services | ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${API_INVOKER_NOT_REGISTERED} | ${access_token} ]
+20220503 13:13:29.261 - INFO - +--- START KEYWORD: Discover services [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${API_INVOKER_NOT_REGISTERED} | ${access_token} ]
+20220503 13:13:29.262 - INFO - +---- START KEYWORD: netapp_to_capif.Discover Service Apis [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${id} | ${access_token} ]
+20220503 13:13:29.286 - FAIL - ({'title': 'Forbidden', 'status': 403, 'detail': 'API Invoker does not exist', 'cause': 'API Invoker id not found'}, 403)
+20220503 13:13:29.288 - DEBUG - Traceback (most recent call last):
+  File "/opt/robot-tests/pythonnetapp/netapp_to_capif.py", line 86, in discover_service_apis
+    response.raise_for_status()
+  File "/usr/lib/python3/dist-packages/requests/models.py", line 940, in raise_for_status
+    raise HTTPError(http_error_msg, response=self)
+requests.exceptions.HTTPError: 403 Client Error: FORBIDDEN for url: http://host.docker.internal:8080/service-apis/v1/allServiceAPIs?api-invoker-id=not-valid
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/opt/robot-tests/pythonnetapp/netapp_to_capif.py", line 92, in discover_service_apis
+    raise Exception(message, status)
+Exception: ({'title': 'Forbidden', 'status': 403, 'detail': 'API Invoker does not exist', 'cause': 'API Invoker id not found'}, 403)
+20220503 13:13:29.288 - INFO - +---- END KEYWORD: netapp_to_capif.Discover Service Apis (26)
+20220503 13:13:29.289 - INFO - +--- END KEYWORD: Discover services (28)
+20220503 13:13:29.289 - INFO - ${resp} = ({'title': 'Forbidden', 'status': 403, 'detail': 'API Invoker does not exist', 'cause': 'API Invoker id not found'}, 403)
+20220503 13:13:29.289 - INFO - +-- END KEYWORD: BuiltIn.Run Keyword And Expect Error (28)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220503 13:13:29.290 - INFO - +-- START KEYWORD: BuiltIn.Should Contain [ ${resp} | 403 ]
+20220503 13:13:29.290 - INFO - +-- END KEYWORD: BuiltIn.Should Contain (0)
+------------------------------------------------------------------------------
+20220503 13:13:29.291 - INFO - +- END TEST: Discover Published service APIs by not registered API Invoker (44)
+------------------------------------------------------------------------------
+20220503 13:13:29.292 - INFO - +- START TEST: Discover Published service APIs by registered API Invoker with 1 result filtered [ ]
+------------------------------------------------------------------------------
+20220503 13:13:29.293 - INFO - +-- START KEYWORD: BuiltIn.Run Keyword [ Token_case_invoker ]
+20220503 13:13:29.294 - INFO - +--- START KEYWORD: basicFunctions.Token_case_invoker [ ]
+20220503 13:13:29.294 - INFO - +---- START KEYWORD: netapp_to_capif.Get Capif Token [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${CONFIG.credentials.invoker_username} | ${CONFIG.credentials.invoker_password} | ${CONFIG.credentials.invoker_role} ]
+20220503 13:13:29.305 - INFO - ${resp} = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1MTU4MzYwOSwianRpIjoiMzIxODExNjgtM2RlMS00NmU1LWI0Y2ItN2IwZmI3NzFhM2NiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImR1bW15bmV0YXBwIGludm9rZXIiLCJ...
+20220503 13:13:29.305 - INFO - +---- END KEYWORD: netapp_to_capif.Get Capif Token (11)
+20220503 13:13:29.306 - INFO - +--- END KEYWORD: basicFunctions.Token_case_invoker (12)
+20220503 13:13:29.306 - INFO - ${access_token_invoker} = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1MTU4MzYwOSwianRpIjoiMzIxODExNjgtM2RlMS00NmU1LWI0Y2ItN2IwZmI3NzFhM2NiIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImR1bW15bmV0YXBwIGludm9rZXIiLCJ...
+20220503 13:13:29.307 - INFO - +-- END KEYWORD: BuiltIn.Run Keyword (13)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220503 13:13:29.307 - INFO - +-- START KEYWORD: BuiltIn.Run Keyword [ Discover services | ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${invId} | ${access_token_invoker} ]
+20220503 13:13:29.308 - INFO - +--- START KEYWORD: Discover services [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${invId} | ${access_token_invoker} ]
+20220503 13:13:29.308 - INFO - +---- START KEYWORD: netapp_to_capif.Discover Service Apis [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${id} | ${access_token} ]
+20220503 13:13:29.334 - INFO - ${resp} = [{'api_name': '3gpp-session-with-qos', 'api_id': 'ad451ca8b88dc98b9a53138773cdd4', 'aef_profiles': [{'aef_id': 'string', 'versions': [{'api_version': 'v1', 'expiry': {'$date': '2021-11-30T10:32:02.004...
+20220503 13:13:29.334 - INFO - +---- END KEYWORD: netapp_to_capif.Discover Service Apis (26)
+20220503 13:13:29.335 - INFO - +--- END KEYWORD: Discover services (27)
+20220503 13:13:29.335 - INFO - ${resp} = [{'api_name': '3gpp-session-with-qos', 'api_id': 'ad451ca8b88dc98b9a53138773cdd4', 'aef_profiles': [{'aef_id': 'string', 'versions': [{'api_version': 'v1', 'expiry': {'$date': '2021-11-30T10:32:02.004...
+20220503 13:13:29.336 - INFO - +-- END KEYWORD: BuiltIn.Run Keyword (29)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220503 13:13:29.336 - INFO - +-- START KEYWORD: BuiltIn.Should Not Be Empty [ ${resp} ]
+20220503 13:13:29.337 - INFO - Length is 1
+20220503 13:13:29.337 - INFO - +-- END KEYWORD: BuiltIn.Should Not Be Empty (1)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220503 13:13:29.338 - INFO - +-- START KEYWORD: BuiltIn.Length Should Be [ ${resp} | 1 ]
+20220503 13:13:29.338 - INFO - Length is 1
+20220503 13:13:29.339 - INFO - +-- END KEYWORD: BuiltIn.Length Should Be (0)
+------------------------------------------------------------------------------
+20220503 13:13:29.339 - INFO - +- END TEST: Discover Published service APIs by registered API Invoker with 1 result filtered (47)
+------------------------------------------------------------------------------
+20220503 13:13:29.340 - INFO - +- START TEST: Discover Published service APIs by registered API Invoker filtered with no match [ ]
+------------------------------------------------------------------------------
+20220503 13:13:29.341 - INFO - +-- START KEYWORD: BuiltIn.Run Keyword [ Token_case_invoker ]
+20220503 13:13:29.341 - INFO - +--- START KEYWORD: basicFunctions.Token_case_invoker [ ]
+20220503 13:13:29.342 - INFO - +---- START KEYWORD: netapp_to_capif.Get Capif Token [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${CONFIG.credentials.invoker_username} | ${CONFIG.credentials.invoker_password} | ${CONFIG.credentials.invoker_role} ]
+20220503 13:13:29.352 - INFO - ${resp} = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1MTU4MzYwOSwianRpIjoiZWViZjUwODctNmMyYi00YmE2LTgzNDgtZDc2NTk0OWUxMDkyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImR1bW15bmV0YXBwIGludm9rZXIiLCJ...
+20220503 13:13:29.353 - INFO - +---- END KEYWORD: netapp_to_capif.Get Capif Token (11)
+20220503 13:13:29.353 - INFO - +--- END KEYWORD: basicFunctions.Token_case_invoker (12)
+20220503 13:13:29.354 - INFO - ${access_token_invoker} = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1MTU4MzYwOSwianRpIjoiZWViZjUwODctNmMyYi00YmE2LTgzNDgtZDc2NTk0OWUxMDkyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImR1bW15bmV0YXBwIGludm9rZXIiLCJ...
+20220503 13:13:29.354 - INFO - +-- END KEYWORD: BuiltIn.Run Keyword (13)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220503 13:13:29.355 - INFO - +-- START KEYWORD: BuiltIn.Run Keyword [ Discover services | ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${invId} | ${access_token_invoker} ]
+20220503 13:13:29.356 - INFO - +--- START KEYWORD: Discover services [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${invId} | ${access_token_invoker} ]
+20220503 13:13:29.356 - INFO - +---- START KEYWORD: netapp_to_capif.Discover Service Apis [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${id} | ${access_token} ]
+20220503 13:13:29.383 - INFO - ${resp} = [{'api_name': '3gpp-session-with-qos', 'api_id': 'ad451ca8b88dc98b9a53138773cdd4', 'aef_profiles': [{'aef_id': 'string', 'versions': [{'api_version': 'v1', 'expiry': {'$date': '2021-11-30T10:32:02.004...
+20220503 13:13:29.383 - INFO - +---- END KEYWORD: netapp_to_capif.Discover Service Apis (27)
+20220503 13:13:29.384 - INFO - +--- END KEYWORD: Discover services (28)
+20220503 13:13:29.384 - INFO - ${resp} = [{'api_name': '3gpp-session-with-qos', 'api_id': 'ad451ca8b88dc98b9a53138773cdd4', 'aef_profiles': [{'aef_id': 'string', 'versions': [{'api_version': 'v1', 'expiry': {'$date': '2021-11-30T10:32:02.004...
+20220503 13:13:29.384 - INFO - +-- END KEYWORD: BuiltIn.Run Keyword (29)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220503 13:13:29.385 - INFO - +-- START KEYWORD: BuiltIn.Should Not Be Empty [ ${resp} ]
+20220503 13:13:29.385 - INFO - Length is 1
+20220503 13:13:29.386 - INFO - +-- END KEYWORD: BuiltIn.Should Not Be Empty (1)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220503 13:13:29.386 - INFO - +-- START KEYWORD: BuiltIn.Length Should Be [ ${resp} | 0 ]
+20220503 13:13:29.387 - INFO - Length is 1
+20220503 13:13:29.387 - FAIL - Length of '[{'api_name': '3gpp-session-with-qos', 'api_id': 'ad451ca8b88dc98b9a53138773cdd4', 'aef_profiles': [{'aef_id': 'string', 'versions': [{'api_version': 'v1', 'expiry': {'$date': '2021-11-30T10:32:02.004Z'}, 'resources': [{'resource_name': 'string', 'comm_type': 'REQUEST_RESPONSE', 'uri': 'string', 'cust_op_name': 'string', 'operations': ['GET'], 'description': 'string'}], 'cust_operations': [{'comm_type': 'REQUEST_RESPONSE', 'cust_op_name': 'string', 'operations': ['GET'], 'description': 'string'}]}], 'protocol': 'HTTP_1_1', 'data_format': 'JSON', 'security_methods': ['PSK'], 'domain_name': None, 'interface_descriptions': [{'ipv4_addr': 'string', 'ipv6_addr': None, 'port': 65535, 'security_methods': ['PSK']}, {'ipv4_addr': 'string', 'ipv6_addr': None, 'port': 65535, 'security_methods': ['PSK']}]}, {'aef_id': 'string', 'versions': [{'api_version': 'v1', 'expiry': {'$date': '2021-11-30T10:32:02.004Z'}, 'resources': [{'resource_name': 'string', 'comm_type': 'REQUEST_RESPONSE', 'uri': 'string', 'cust_op_name': 'string', 'operations': ['GET'], 'description': 'string'}], 'cust_operations': [{'comm_type': 'REQUEST_RESPONSE', 'cust_op_name': 'string', 'operations': ['GET'], 'description': 'string'}]}], 'protocol': 'HTTP_1_1', 'data_format': 'JSON', 'security_methods': ['PSK'], 'domain_name': None, 'interface_descriptions': [{'ipv4_addr': 'string', 'ipv6_addr': None, 'port': 65535, 'security_methods': ['PSK']}, {'ipv4_addr': 'string', 'ipv6_addr': None, 'port': 65535, 'security_methods': ['PSK']}]}], 'description': 'string', 'supported_features': 'fffff', 'shareable_info': {'is_shareable': True, 'capif_prov_doms': ['string']}, 'service_api_category': 'string', 'api_supp_feats': 'fffff', 'pub_api_path': {'ccf_ids': ['string']}, 'ccf_id': 'string'}]' should be 0 but is 1.
+20220503 13:13:29.387 - DEBUG - Traceback (most recent call last):
+  None
+AssertionError: Length of '[{'api_name': '3gpp-session-with-qos', 'api_id': 'ad451ca8b88dc98b9a53138773cdd4', 'aef_profiles': [{'aef_id': 'string', 'versions': [{'api_version': 'v1', 'expiry': {'$date': '2021-11-30T10:32:02.004Z'}, 'resources': [{'resource_name': 'string', 'comm_type': 'REQUEST_RESPONSE', 'uri': 'string', 'cust_op_name': 'string', 'operations': ['GET'], 'description': 'string'}], 'cust_operations': [{'comm_type': 'REQUEST_RESPONSE', 'cust_op_name': 'string', 'operations': ['GET'], 'description': 'string'}]}], 'protocol': 'HTTP_1_1', 'data_format': 'JSON', 'security_methods': ['PSK'], 'domain_name': None, 'interface_descriptions': [{'ipv4_addr': 'string', 'ipv6_addr': None, 'port': 65535, 'security_methods': ['PSK']}, {'ipv4_addr': 'string', 'ipv6_addr': None, 'port': 65535, 'security_methods': ['PSK']}]}, {'aef_id': 'string', 'versions': [{'api_version': 'v1', 'expiry': {'$date': '2021-11-30T10:32:02.004Z'}, 'resources': [{'resource_name': 'string', 'comm_type': 'REQUEST_RESPONSE', 'uri': 'string', 'cust_op_name': 'string', 'operations': ['GET'], 'description': 'string'}], 'cust_operations': [{'comm_type': 'REQUEST_RESPONSE', 'cust_op_name': 'string', 'operations': ['GET'], 'description': 'string'}]}], 'protocol': 'HTTP_1_1', 'data_format': 'JSON', 'security_methods': ['PSK'], 'domain_name': None, 'interface_descriptions': [{'ipv4_addr': 'string', 'ipv6_addr': None, 'port': 65535, 'security_methods': ['PSK']}, {'ipv4_addr': 'string', 'ipv6_addr': None, 'port': 65535, 'security_methods': ['PSK']}]}], 'description': 'string', 'supported_features': 'fffff', 'shareable_info': {'is_shareable': True, 'capif_prov_doms': ['string']}, 'service_api_category': 'string', 'api_supp_feats': 'fffff', 'pub_api_path': {'ccf_ids': ['string']}, 'ccf_id': 'string'}]' should be 0 but is 1.
+20220503 13:13:29.388 - INFO - +-- END KEYWORD: BuiltIn.Length Should Be (2)
+------------------------------------------------------------------------------
+20220503 13:13:29.389 - INFO - +- END TEST: Discover Published service APIs by registered API Invoker filtered with no match (48)
+------------------------------------------------------------------------------
+20220503 13:13:29.391 - INFO - +- START TEST: Discover Published service APIs by registered API Invoker not filtered [ ]
+------------------------------------------------------------------------------
+20220503 13:13:29.392 - INFO - +-- START KEYWORD: BuiltIn.Run Keyword [ Token_case_invoker ]
+20220503 13:13:29.392 - INFO - +--- START KEYWORD: basicFunctions.Token_case_invoker [ ]
+20220503 13:13:29.393 - INFO - +---- START KEYWORD: netapp_to_capif.Get Capif Token [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${CONFIG.credentials.invoker_username} | ${CONFIG.credentials.invoker_password} | ${CONFIG.credentials.invoker_role} ]
+20220503 13:13:29.403 - INFO - ${resp} = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1MTU4MzYwOSwianRpIjoiODQzMTJlNTMtNzIzYS00YmIwLThkYmMtZTFhYTIxYzVlYzJkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImR1bW15bmV0YXBwIGludm9rZXIiLCJ...
+20220503 13:13:29.404 - INFO - +---- END KEYWORD: netapp_to_capif.Get Capif Token (11)
+20220503 13:13:29.404 - INFO - +--- END KEYWORD: basicFunctions.Token_case_invoker (12)
+20220503 13:13:29.405 - INFO - ${access_token_invoker} = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY1MTU4MzYwOSwianRpIjoiODQzMTJlNTMtNzIzYS00YmIwLThkYmMtZTFhYTIxYzVlYzJkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImR1bW15bmV0YXBwIGludm9rZXIiLCJ...
+20220503 13:13:29.405 - INFO - +-- END KEYWORD: BuiltIn.Run Keyword (13)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220503 13:13:29.406 - INFO - +-- START KEYWORD: BuiltIn.Run Keyword [ Discover services | ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${invId} | ${access_token_invoker} ]
+20220503 13:13:29.407 - INFO - +--- START KEYWORD: Discover services [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${invId} | ${access_token_invoker} ]
+20220503 13:13:29.407 - INFO - +---- START KEYWORD: netapp_to_capif.Discover Service Apis [ ${CONFIG.credentials.capif_ip} | ${CONFIG.credentials.capif_port} | ${id} | ${access_token} ]
+20220503 13:13:29.434 - INFO - ${resp} = [{'api_name': '3gpp-session-with-qos', 'api_id': 'ad451ca8b88dc98b9a53138773cdd4', 'aef_profiles': [{'aef_id': 'string', 'versions': [{'api_version': 'v1', 'expiry': {'$date': '2021-11-30T10:32:02.004...
+20220503 13:13:29.435 - INFO - +---- END KEYWORD: netapp_to_capif.Discover Service Apis (28)
+20220503 13:13:29.436 - INFO - +--- END KEYWORD: Discover services (28)
+20220503 13:13:29.436 - INFO - ${resp} = [{'api_name': '3gpp-session-with-qos', 'api_id': 'ad451ca8b88dc98b9a53138773cdd4', 'aef_profiles': [{'aef_id': 'string', 'versions': [{'api_version': 'v1', 'expiry': {'$date': '2021-11-30T10:32:02.004...
+20220503 13:13:29.436 - INFO - +-- END KEYWORD: BuiltIn.Run Keyword (30)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+20220503 13:13:29.437 - INFO - +-- START KEYWORD: BuiltIn.Should Contain [ ${resp} | 200 ]
+20220503 13:13:29.438 - FAIL - '[{'api_name': '3gpp-session-with-qos', 'api_id': 'ad451ca8b88dc98b9a53138773cdd4', 'aef_profiles': [{'aef_id': 'string', 'versions': [{'api_version': 'v1', 'expiry': {'$date': '2021-11-30T10:32:02.004Z'}, 'resources': [{'resource_name': 'string', 'comm_type': 'REQUEST_RESPONSE', 'uri': 'string', 'cust_op_name': 'string', 'operations': ['GET'], 'description': 'string'}], 'cust_operations': [{'comm_type': 'REQUEST_RESPONSE', 'cust_op_name': 'string', 'operations': ['GET'], 'description': 'string'}]}], 'protocol': 'HTTP_1_1', 'data_format': 'JSON', 'security_methods': ['PSK'], 'domain_name': None, 'interface_descriptions': [{'ipv4_addr': 'string', 'ipv6_addr': None, 'port': 65535, 'security_methods': ['PSK']}, {'ipv4_addr': 'string', 'ipv6_addr': None, 'port': 65535, 'security_methods': ['PSK']}]}, {'aef_id': 'string', 'versions': [{'api_version': 'v1', 'expiry': {'$date': '2021-11-30T10:32:02.004Z'}, 'resources': [{'resource_name': 'string', 'comm_type': 'REQUEST_RESPONSE', 'uri': 'string', 'cust_op_name': 'string', 'operations': ['GET'], 'description': 'string'}], 'cust_operations': [{'comm_type': 'REQUEST_RESPONSE', 'cust_op_name': 'string', 'operations': ['GET'], 'description': 'string'}]}], 'protocol': 'HTTP_1_1', 'data_format': 'JSON', 'security_methods': ['PSK'], 'domain_name': None, 'interface_descriptions': [{'ipv4_addr': 'string', 'ipv6_addr': None, 'port': 65535, 'security_methods': ['PSK']}, {'ipv4_addr': 'string', 'ipv6_addr': None, 'port': 65535, 'security_methods': ['PSK']}]}], 'description': 'string', 'supported_features': 'fffff', 'shareable_info': {'is_shareable': True, 'capif_prov_doms': ['string']}, 'service_api_category': 'string', 'api_supp_feats': 'fffff', 'pub_api_path': {'ccf_ids': ['string']}, 'ccf_id': 'string'}]' does not contain '200'
+20220503 13:13:29.438 - DEBUG - Traceback (most recent call last):
+  None
+AssertionError: '[{'api_name': '3gpp-session-with-qos', 'api_id': 'ad451ca8b88dc98b9a53138773cdd4', 'aef_profiles': [{'aef_id': 'string', 'versions': [{'api_version': 'v1', 'expiry': {'$date': '2021-11-30T10:32:02.004Z'}, 'resources': [{'resource_name': 'string', 'comm_type': 'REQUEST_RESPONSE', 'uri': 'string', 'cust_op_name': 'string', 'operations': ['GET'], 'description': 'string'}], 'cust_operations': [{'comm_type': 'REQUEST_RESPONSE', 'cust_op_name': 'string', 'operations': ['GET'], 'description': 'string'}]}], 'protocol': 'HTTP_1_1', 'data_format': 'JSON', 'security_methods': ['PSK'], 'domain_name': None, 'interface_descriptions': [{'ipv4_addr': 'string', 'ipv6_addr': None, 'port': 65535, 'security_methods': ['PSK']}, {'ipv4_addr': 'string', 'ipv6_addr': None, 'port': 65535, 'security_methods': ['PSK']}]}, {'aef_id': 'string', 'versions': [{'api_version': 'v1', 'expiry': {'$date': '2021-11-30T10:32:02.004Z'}, 'resources': [{'resource_name': 'string', 'comm_type': 'REQUEST_RESPONSE', 'uri': 'string', 'cust_op_name': 'string', 'operations': ['GET'], 'description': 'string'}], 'cust_operations': [{'comm_type': 'REQUEST_RESPONSE', 'cust_op_name': 'string', 'operations': ['GET'], 'description': 'string'}]}], 'protocol': 'HTTP_1_1', 'data_format': 'JSON', 'security_methods': ['PSK'], 'domain_name': None, 'interface_descriptions': [{'ipv4_addr': 'string', 'ipv6_addr': None, 'port': 65535, 'security_methods': ['PSK']}, {'ipv4_addr': 'string', 'ipv6_addr': None, 'port': 65535, 'security_methods': ['PSK']}]}], 'description': 'string', 'supported_features': 'fffff', 'shareable_info': {'is_shareable': True, 'capif_prov_doms': ['string']}, 'service_api_category': 'string', 'api_supp_feats': 'fffff', 'pub_api_path': {'ccf_ids': ['string']}, 'ccf_id': 'string'}]' does not contain '200'
+20220503 13:13:29.438 - INFO - +-- END KEYWORD: BuiltIn.Should Contain (1)
+------------------------------------------------------------------------------
+20220503 13:13:29.439 - INFO - +- END TEST: Discover Published service APIs by registered API Invoker not filtered (49)
+------------------------------------------------------------------------------
+20220503 13:13:29.441 - INFO - + END SUITE: Discover Services Tests (737)
+==============================================================================
