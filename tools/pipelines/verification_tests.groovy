@@ -131,14 +131,14 @@ pipeline{
     post{
         always{
             script {
-                // dir ("${env.ROOT_DIRECTORY}") {
-                //     // echo 'Shutdown all services'
-                //     // sh 'docker-compose down -v'
-                //     sh 'docker kill netapp_robot && docker rm netapp_robot && docker rmi netapp_robot_image'
-                // }
-                dir ("./$NetApp_repo") {
-                    sh './cleanup_docker_containers.sh'
+                dir ("${env.ROOT_DIRECTORY}") {
+                    // echo 'Shutdown all services'
+                    // sh 'docker-compose down -v'
+                    sh 'docker kill netapp_robot && docker rm netapp_robot && docker rmi netapp_robot_image'
                 }
+                // dir ("./$NetApp_repo") {
+                //     sh './cleanup_docker_containers.sh'
+                // }
             }
 
             script {
