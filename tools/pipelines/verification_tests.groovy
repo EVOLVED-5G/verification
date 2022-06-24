@@ -92,7 +92,7 @@ pipeline{
                             )]) {
                                 sh """
                                     docker login --username ${USER} --password ${PASS} dockerhub.hi.inet
-                                    docker build -t netapp_robot_image ${ROBOT_DOCKER_IMAGE_NAME}/${ROBOT_DOCKER_IMAGE_VERSION}/
+                                    docker build -t netapp_robot_image ${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}
                                     docker run -d -t --name netapp_robot \
                                     -e NEF_SERVICES_ENDPOINT=${NEF_HOSTNAME} \
                                     -e CAPIF_SERVICES_ENDPOINT=${CAPIF_HOSTNAME} \
@@ -131,11 +131,11 @@ pipeline{
     post{
         always{
             script {
-                dir ("${env.ROOT_DIRECTORY}") {
-                    // echo 'Shutdown all services'
-                    // sh 'docker-compose down -v'
-                    sh 'docker kill netapp_robot && docker rm netapp_robot && docker rmi netapp_robot_image'
-                }
+                // dir ("${env.ROOT_DIRECTORY}") {
+                //     // echo 'Shutdown all services'
+                //     // sh 'docker-compose down -v'
+                //     sh 'docker kill netapp_robot && docker rm netapp_robot && docker rmi netapp_robot_image'
+                // }
                 dir ("./$NetApp_repo") {
                     sh './cleanup_docker_containers.sh'
                 }
