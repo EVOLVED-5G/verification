@@ -72,9 +72,9 @@ pipeline{
                         // dir ("./nef-services") {
                         //     sh 'ls && make prepare-dev-env && make build && make up && make db-init'
                         // }
-                        dir ("./$NetApp_repo") {
-                            sh 'ls && ./run.sh'
-                        }
+                        // dir ("./$NetApp_repo") {
+                        //     sh 'ls && ./run.sh'
+                        // }
                         dir ("${ROOT_DIRECTORY}") {
                             // sh """
                             //     touch .env && echo "ROBOT_IMAGE_NAME=${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}" > .env && echo "NETAPP_NAME=${NetApp_repo}"
@@ -128,6 +128,9 @@ pipeline{
                     // echo 'Shutdown all services'
                     // sh 'docker-compose down -v'
                     sh 'docker kill netapp_robot && docker rm netapp_robot && docker rmi netapp_robot_image'
+                }
+                dir ("./$NetApp_repo") {
+                    sh './cleanup_docker_containers.sh'
                 }
             }
 
