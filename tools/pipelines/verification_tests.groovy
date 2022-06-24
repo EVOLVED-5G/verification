@@ -85,6 +85,7 @@ pipeline{
                             // """
                             // -e NEF_SERVICES_ENDPOINT=${NEF_SERVICES_ENDPOINT}
                             // -e CAPIF_SERVICES_ENDPOINT=${CAPIF_SERVICES_ENDPOINT}
+                            // ${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}
                             withCredentials([usernamePassword(
                                 credentialsId: 'docker_pull_cred',
                                 usernameVariable: 'USER',
@@ -92,7 +93,7 @@ pipeline{
                             )]) {
                                 sh """
                                     docker login --username ${USER} --password ${PASS} dockerhub.hi.inet
-                                    docker build -t netapp_robot_image ${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}
+                                    docker build -t netapp_robot_image ./tools/
                                     docker run -d -t --name netapp_robot \
                                     -e NEF_SERVICES_ENDPOINT=${NEF_HOSTNAME} \
                                     -e CAPIF_SERVICES_ENDPOINT=${CAPIF_HOSTNAME} \
