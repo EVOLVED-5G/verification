@@ -100,10 +100,10 @@ pipeline{
                                     -v ${ROOT_DIRECTORY}/${NetApp_repo}/capif_callback_server:/opt/robot-tests/capif-callback \
                                     -v ${ROOT_DIRECTORY}/${NetApp_repo}/nef_callback_server:/opt/robot-tests/nef-callback \
                                     -v ${ROOT_DIRECTORY}/${NetApp_repo}/pythonnetapp:/opt/robot-tests/pythonnetapp \
-                                    -v tests:/opt/robot-tests/tests/ \
-                                    -v libraries:/opt/robot-tests/libraries/ \
-                                    -v resources:/opt/robot-tests/resources/ \
-                                    -v results:/opt/robot-tests/results/ netapp_robot_image 
+                                    -v ${WORKSPACE}/tests:/opt/robot-tests/tests/ \
+                                    -v ${WORKSPACE}/libraries:/opt/robot-tests/libraries/ \
+                                    -v ${WORKSPACE}/resources:/opt/robot-tests/resources/ \
+                                    -v ${WORKSPACE}/results:/opt/robot-tests/results/ netapp_robot_image 
                                 """
                                 }
                         }
@@ -116,8 +116,7 @@ pipeline{
                         """
                         sh """
                             docker exec -t netapp_robot bash \
-                            -c "cd ./tests/capif_invoker_tests; \
-                                robot /opt/robot-tests/tests/capif_invoker_tests/dummy-tests.robot; \
+                            -c "robot /opt/robot-tests/tests/capif_invoker_tests/dummy-tests.robot; \
                                 robot /opt/robot-tests/tests/capif_discover_services/discover_services_tests.robot; \
                                 robot /opt/robot-tests/tests/capif_publish_services/publish_services_tests.robot;"
                         """
