@@ -100,10 +100,10 @@ pipeline{
                                     -v ${ROOT_DIRECTORY}/${NetApp_repo}/capif_callback_server:/opt/robot-tests/capif-callback \
                                     -v ${ROOT_DIRECTORY}/${NetApp_repo}/nef_callback_server:/opt/robot-tests/nef-callback \
                                     -v ${ROOT_DIRECTORY}/${NetApp_repo}/pythonnetapp:/opt/robot-tests/pythonnetapp \
-                                    -v ./tests:/opt/robot-tests/tests/ \
-                                    -v ./libraries:/opt/robot-tests/libraries/ \
-                                    -v ./resources:/opt/robot-tests/resources/ \
-                                    -v ./results:/opt/robot-tests/results/ netapp_robot_image 
+                                    -v tests:/opt/robot-tests/tests/ \
+                                    -v libraries:/opt/robot-tests/libraries/ \
+                                    -v resources:/opt/robot-tests/resources/ \
+                                    -v results:/opt/robot-tests/results/ netapp_robot_image 
                                 """
                                 }
                         }
