@@ -112,6 +112,9 @@ pipeline{
                 stage("Run test cases."){
                     steps{
                         sh """
+                            docker exec -t netapp_robot bash -c "ls -la"
+                        """
+                        sh """
                             docker exec -t netapp_robot bash \
                             -c "ls -la \
                                 robot /opt/robot-tests/tests/capif_invoker_tests/dummy-tests.robot; \
