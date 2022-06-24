@@ -17,7 +17,7 @@ Register DummyNetApp
 
     [Tags]         Dummy_NetApp_Register_Test
 
-    Run Keyword    DummyNetApp_register    http://openshift.evolved-5g.eu    80    ${CONFIG.credentials.invoker_username}    ${CONFIG.credentials.invoker_password}    ${CONFIG.credentials.invoker_role}    ${CONFIG.credentials.invoker_description}
+    Run Keyword    DummyNetApp_register    openshift.evolved-5g.eu    80    ${CONFIG.credentials.invoker_username}    ${CONFIG.credentials.invoker_password}    ${CONFIG.credentials.invoker_role}    ${CONFIG.credentials.invoker_description}
 
 Register DummyNetApp Already registered
 
