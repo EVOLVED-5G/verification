@@ -113,8 +113,9 @@ pipeline{
                     steps{
                         sh """
                             docker exec -t netapp_robot bash \
-                            -c "robot ./tests/capif_invoker_tests/dummy-tests.robot; \
-                                robot ./tests/capif_discover_services/discover_services_tests.robot; \
+                            -c "cd ./tests/capif_invoker_tests &&\
+                                robot dummy-tests.robot; &&\
+                                robot ./tests/capif_discover_services/discover_services_tests.robot; &&\
                                 robot ./tests/capif_publish_services/publish_services_tests.robot;"
                         """
                         // robot ./tests/tests/nef_monitoring_events/nef_monitoring_events_tests.robot;
