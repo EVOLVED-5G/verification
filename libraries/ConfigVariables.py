@@ -1,6 +1,7 @@
-import ConfigParser
+import configparser
+
 def get_variables(varname, filename):
-    config = ConfigParser.ConfigParser()
+    config = configparser.ConfigParser()
     config.read(filename)
 
     variables = {}

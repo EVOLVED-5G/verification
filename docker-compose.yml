@@ -12,6 +12,7 @@ services:
       - ../capif_callback_server:/opt/robot-tests/capif-callback
       - ../nef_callback_server:/opt/robot-tests/nef-callback
       - ../pythonnetapp:/opt/robot-tests/pythonnetapp
+      - ../evolved5g:/opt/robot-tests/pythonnetapp/evolved5g
       - ./tests:/opt/robot-tests/tests/
       - ./libraries:/opt/robot-tests/libraries/
       - ./resources:/opt/robot-tests/resources/

@@ -1,6 +1,8 @@
 *** Settings ***
 Library         RequestsLibrary
 Library         Collections
+Library         /opt/robot-tests/pythonnetapp/emulator_utils.py
+
 
 *** Variables ***
 ${APF_ID_NOT_VALID}         not-valid
@@ -19,7 +21,9 @@ capifcallback
 
 nefcallback
 
-    Create Session    mysession    ${NEF_HOSTNAME}     verify=True
+    ${NEF_HOSTNAME}=    emulator_utils.get_callback_server_for_nef_responses
+
+    Create Session    mysession     ${NEF_HOSTNAME}    verify=True
 
     ${resp}=    POST On Session    mysession    /nefcallbacks    
 

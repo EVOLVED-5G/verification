@@ -5,7 +5,7 @@ Documentation   This test file contains the basic register requests from netApp 
 Library         /opt/robot-tests/pythonnetapp/apf_to_capif.py
 Library         /opt/robot-tests/pythonnetapp/netapp_to_capif.py
 Library         OperatingSystem
-Variables       /opt/robot-tests/tests/libraries/ConfigVariables.py  CONFIG  /opt/robot-tests/pythonnetapp/credentials.properties
+Variables       /opt/robot-tests/libraries/ConfigVariables.py  CONFIG  /opt/robot-tests/pythonnetapp/credentials.properties
 
 *** Variables ***
 ${CAPIF_HOSTNAME}           ${CONFIG.credentials.capif_ip}:${CONFIG.credentials.capif_port}
