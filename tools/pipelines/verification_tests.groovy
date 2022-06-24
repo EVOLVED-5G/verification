@@ -85,20 +85,26 @@ pipeline{
                             // """
                             // -e NEF_SERVICES_ENDPOINT=${NEF_SERVICES_ENDPOINT}
                             // -e CAPIF_SERVICES_ENDPOINT=${CAPIF_SERVICES_ENDPOINT}
-                            sh """
-                                docker build -t netapp_robot_image ${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}
-                                docker run -d -t --name netapp_robot \
-                                -e NEF_SERVICES_ENDPOINT=${NEF_HOSTNAME} \
-                                -e CAPIF_SERVICES_ENDPOINT=${CAPIF_HOSTNAME} \
-                                -v ${ROOT_DIRECTORY}/${NetApp_repo}/capif_callback_server:/opt/robot-tests/capif-callback \
-                                -v ${ROOT_DIRECTORY}/${NetApp_repo}/nef_callback_server:/opt/robot-tests/nef-callback \
-                                -v ${ROOT_DIRECTORY}/${NetApp_repo}/pythonnetapp:/opt/robot-tests/pythonnetapp \
-                                -v ./tests:/opt/robot-tests/tests/ \
-                                -v ./libraries:/opt/robot-tests/libraries/ \
-                                -v ./resources:/opt/robot-tests/resources/ \
-                                -v ./results:/opt/robot-tests/results/ netapp_robot_image 
-                            """
-                        }
+                            withCredentials([usernamePassword(
+                                credentialsId: 'docker_pull_cred',
+                                usernameVariable: 'USER',
+                                passwordVariable: 'PASS'
+                            )]) {
+                                sh """
+                                    docker login --username ${USER} --password ${PASS} dockerhub.hi.inet
+                                    docker build -t netapp_robot_image ${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}
+                                    docker run -d -t --name netapp_robot \
+                                    -e NEF_SERVICES_ENDPOINT=${NEF_HOSTNAME} \
+                                    -e CAPIF_SERVICES_ENDPOINT=${CAPIF_HOSTNAME} \
+                                    -v ${ROOT_DIRECTORY}/${NetApp_repo}/capif_callback_server:/opt/robot-tests/capif-callback \
+                                    -v ${ROOT_DIRECTORY}/${NetApp_repo}/nef_callback_server:/opt/robot-tests/nef-callback \
+                                    -v ${ROOT_DIRECTORY}/${NetApp_repo}/pythonnetapp:/opt/robot-tests/pythonnetapp \
+                                    -v ./tests:/opt/robot-tests/tests/ \
+                                    -v ./libraries:/opt/robot-tests/libraries/ \
+                                    -v ./resources:/opt/robot-tests/resources/ \
+                                    -v ./results:/opt/robot-tests/results/ netapp_robot_image 
+                                """
+                                }
                     }
                 }
                 stage("Run test cases."){
