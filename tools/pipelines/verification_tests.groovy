@@ -105,6 +105,7 @@ pipeline{
                                     -v ./results:/opt/robot-tests/results/ netapp_robot_image 
                                 """
                                 }
+                        }
                     }
                 }
                 stage("Run test cases."){
