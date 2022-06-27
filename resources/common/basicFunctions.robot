@@ -8,7 +8,7 @@ Library         OperatingSystem
 Variables       /opt/robot-tests/libraries/ConfigVariables.py  CONFIG  /opt/robot-tests/tools/config.properties
 
 *** Variables ***
-${CAPIF_HOSTNAME}           ${CONFIG.credentials.capif_ip}:${CONFIG.credentials.capif_port}
+# ${CAPIF_HOSTNAME}           ${CONFIG.credentials.capif_ip}:${CONFIG.credentials.capif_port}
 ${success}                  201
 ${already_exists}           409
 ${forbidden}                403

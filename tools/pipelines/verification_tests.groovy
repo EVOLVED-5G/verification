@@ -112,7 +112,7 @@ pipeline{
                 stage("Run test cases."){
                     steps{
                         sh """
-                            docker exec -t netapp_robot bash -c "ls -la ./tests"
+                            docker exec -t netapp_robot bash -c "ls -la"
                         """
                         sh """
                             docker exec -t netapp_robot bash \

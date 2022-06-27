@@ -4,10 +4,10 @@ Documentation   This test file contains the basic register requests from netApp 
 # Library         Collections
 Library         /opt/robot-tests/pythonnetapp/netapp_to_capif.py
 Resource        /opt/robot-tests/resources/common/basicFunctions.robot
-Variables       /opt/robot-tests/libraries/ConfigVariables.py  CONFIG  /opt/robot-tests/tools/config.properties
+Variables       /opt/robot-tests/libraries/ConfigVariables.py    CONFIG    /opt/robot-tests/tools/config.properties
 
 *** Variables ***
-${CAPIF_HOSTNAME}           ${CONFIG.credentials.capif_ip}:${CONFIG.credentials.capif_port}
+${CAPIF_HOSTNAME}           ${CONFIG.credentials.capif_port}  #${CONFIG.credentials.capif_ip}:
 
 *** Keywords ***
 
