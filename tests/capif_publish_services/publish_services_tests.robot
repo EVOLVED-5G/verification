@@ -2,7 +2,7 @@
 *** Settings ***
 Library         /opt/robot-tests/pythonnetapp/apf_to_capif.py
 Resource        /opt/robot-tests/resources/common/basicFunctions.robot
-Variables       /opt/robot-tests/libraries/ConfigVariables.py  CONFIG  /opt/robot-tests/verification/tools/config.properties
+Variables       /opt/robot-tests/libraries/ConfigVariables.py  CONFIG  /opt/robot-tests/tools/config.properties
 
 
 *** Variables ***
