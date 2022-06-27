@@ -5,7 +5,7 @@ Documentation   This test file contains the basic register requests from netApp 
 Library         /opt/robot-tests/pythonnetapp/apf_to_capif.py
 Library         /opt/robot-tests/pythonnetapp/netapp_to_capif.py
 Library         OperatingSystem
-Variables       /opt/robot-tests/libraries/ConfigVariables.py  CONFIG  /opt/robot-tests/pythonnetapp/credentials.properties
+Variables       /opt/robot-tests/libraries/ConfigVariables.py  CONFIG  /opt/robot-tests/verification/tools/config.properties
 
 *** Variables ***
 ${CAPIF_HOSTNAME}           ${CONFIG.credentials.capif_ip}:${CONFIG.credentials.capif_port}
@@ -87,7 +87,6 @@ Invoker_already_registered
     Should contain     ${output}    ${forbidden}
 
 
-
 Publish services
 
     [Arguments]    ${CONFIG.credentials.capif_ip}    ${CONFIG.credentials.capif_port}    ${api_invoker_id}    ${access_token}
@@ -95,4 +94,13 @@ Publish services
     ${resp}=       apf_to_capif.publish_service_api_to_capif    ${CONFIG.credentials.capif_ip}    ${CONFIG.credentials.capif_port}    ${api_invoker_id}    ${access_token}
 
     [Return]       ${resp}
+
+
+Clean Test Information By HTTP Requests
+
+    [Arguments]    ${NGINX_HOSTNAME}
+
+    # ${resp}=       DELETE On Session      jwtsession    /testdata
+
+    # Should Be Equal As Strings    ${resp.status_code}    200
 

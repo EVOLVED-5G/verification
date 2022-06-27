@@ -4,7 +4,7 @@ Documentation   This test file contains the basic register requests from netApp 
 # Library         Collections
 Library         /opt/robot-tests/pythonnetapp/netapp_to_capif.py
 Resource        /opt/robot-tests/resources/common/basicFunctions.robot
-Variables       /opt/robot-tests/libraries/ConfigVariables.py  CONFIG  /opt/robot-tests/pythonnetapp/credentials.properties
+Variables       /opt/robot-tests/libraries/ConfigVariables.py  CONFIG  /opt/robot-tests/verification/tools/config.properties
 
 *** Variables ***
 ${CAPIF_HOSTNAME}           ${CONFIG.credentials.capif_ip}:${CONFIG.credentials.capif_port}
@@ -17,7 +17,7 @@ Register DummyNetApp
 
     [Tags]         Dummy_NetApp_Register_Test
 
-    Run Keyword    DummyNetApp_register    openshift.evolved-5g.eu    80    ${CONFIG.credentials.invoker_username}    ${CONFIG.credentials.invoker_password}    ${CONFIG.credentials.invoker_role}    ${CONFIG.credentials.invoker_description}
+    Run Keyword    DummyNetApp_register    ${CONFIG.credentials.capif_ip}    ${CONFIG.credentials.capif_port}    ${CONFIG.credentials.invoker_username}    ${CONFIG.credentials.invoker_password}    ${CONFIG.credentials.invoker_role}    ${CONFIG.credentials.invoker_description}
 
 Register DummyNetApp Already registered
 
