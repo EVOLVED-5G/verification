@@ -3,10 +3,10 @@ Documentation   This test file contains the basic register requests from netApp 
 Library         /opt/robot-tests/pythonnetapp/netapp_to_capif.py
 # Library         /opt/robot-tests/pythonnetapp/invoker_details.json
 Resource        /opt/robot-tests/resources/common/basicFunctions.robot
-Variables       /opt/robot-tests/libraries/ConfigVariables.py  CONFIG  /opt/robot-tests/tools/credentials.properties
+Variables       /opt/robot-tests/libraries/ConfigVariables.py  CONFIG  /opt/robot-tests/credentials.properties
 
 *** Variables ***
-${CAPIF_HOSTNAME}           ${CONFIG.credentials.capif_ip}:${CONFIG.credentials.capif_port}
+# ${CAPIF_HOSTNAME}           ${CONFIG.credentials.capif_ip}:${CONFIG.credentials.capif_port}
 ${non-auth}                 eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY0NzYxNDQxNSwianRpIjoiZTc3MDhjMmMtZjFiMi00MDc1LWFlNTctM2YxYmYyYmU4YWY1IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImN1c3RvbTRuZXRhcHAgaW52b2tlciIsIm5iZiI6MTY0NzYxNDQxNSwiZXhwIjoxNjQ3NjE1MzE1fQ.8CWiqYTtje4AjDmNqA6OjmYMJF3M90NM4GnYIOyHNnI
 ${API_INVOKER_NOT_REGISTERED}    not-valid
 ${NGINX_HOSTNAME}           openshift.evolved-5g.eu
