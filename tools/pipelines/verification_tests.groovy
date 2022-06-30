@@ -103,7 +103,7 @@ pipeline{
                                     -v ${WORKSPACE}/tests:/opt/robot-tests/tests/ \
                                     -v ${WORKSPACE}/libraries:/opt/robot-tests/libraries/ \
                                     -v ${WORKSPACE}/resources:/opt/robot-tests/resources/ \
-                                    -v ${WORKSPACE}/results:/opt/robot-tests/results/ netapp_robot_image
+                                    -v ${WORKSPACE}/results:/opt/robot-tests/results/ \
                                     -v ${WORKSPACE}/tools/credentials.properties:/opt/robot-tests/credentials.properties netapp_robot_image  
                                 """
                                 }
