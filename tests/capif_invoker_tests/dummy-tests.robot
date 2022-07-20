@@ -7,7 +7,8 @@ Resource        /opt/robot-tests/resources/common/basicFunctions.robot
 Variables       /opt/robot-tests/libraries/ConfigVariables.py    CONFIG    /opt/robot-tests/credentials.properties
 
 *** Variables ***
-# ${CAPIF_HOSTNAME}           ${CONFIG.credentials.capif_port}  #${CONFIG.credentials.capif_ip}:
+# ${CONFIG.credentials.capif_ip}    ${CAPIF_SERVICES_ENDPOINT}
+# ${CONFIG.credentials.capif_port}    ${CAPIF_SERVICES_ENDPOINT}
 
 *** Keywords ***
 
