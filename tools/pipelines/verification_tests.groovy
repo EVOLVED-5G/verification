@@ -142,12 +142,11 @@ pipeline{
                 stage("Run test cases."){
                     steps{
                         sh """
-                            docker exec -t netapp_robot bash -c "ls -la && pip list"
+                            docker exec -t netapp_robot bash -c "ls -la"
                         """
                         sh """
                             docker exec -t netapp_robot bash \
-                            -c "pip list \
-                                robot /opt/robot-tests/tests/capif_invoker_tests/dummy-tests.robot; \
+                            -c "robot /opt/robot-tests/tests/capif_invoker_tests/dummy-tests.robot; \
                                 robot /opt/robot-tests/tests/capif_discover_services/discover_services_tests.robot; \
                                 robot /opt/robot-tests/tests/capif_publish_services/publish_services_tests.robot; \
                                 robot /opt/robot-tests/tests/callbacks/callback_tests.robot;"
@@ -179,7 +178,7 @@ pipeline{
                         sh './clean_capif_docker_services.sh'
                     }
                 }
-                sh 'docker kill netapp_robot && docker rm netapp_robot && docker rmi netapp_robot_image'
+                sh 'docker kill netapp_robot && docker rm netapp_robot && docker rmi ${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}'
             }
 
             script {
