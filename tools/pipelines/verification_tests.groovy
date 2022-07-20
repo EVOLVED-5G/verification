@@ -124,6 +124,7 @@ pipeline{
                                     docker login --username ${USER} --password ${PASS} dockerhub.hi.inet
                                     docker pull ${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}
                                     docker run -d -t --name netapp_robot \
+                                    --network=host --rm \
                                     -e NEF_SERVICES_ENDPOINT=${NEF_HOSTNAME} \
                                     -e CAPIF_SERVICES_ENDPOINT=${CAPIF_HOSTNAME} \
                                     -v ${ROOT_DIRECTORY}/${NetApp_repo}/capif_callback_server:/opt/robot-tests/capif-callback \
