@@ -96,11 +96,12 @@ pipeline{
                     }
                     steps {
                         dir ("./nef-services") {
-                            sh """ls \
+                            sh """
                                 make prepare-dev-env \
                                 nohup make build & \
                                 nohup make up & \
-                                nohup make db-init &"""
+                                nohup make db-init &
+                            """
                         }
                     }
                 }
