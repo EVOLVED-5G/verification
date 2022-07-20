@@ -122,7 +122,7 @@ pipeline{
                             )]) {
                                 sh """
                                     docker login --username ${USER} --password ${PASS} dockerhub.hi.inet
-                                    docker pull -t netapp_robot_image ${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}
+                                    docker pull ${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}
                                     docker run -d -t --name netapp_robot \
                                     -e NEF_SERVICES_ENDPOINT=${NEF_HOSTNAME} \
                                     -e CAPIF_SERVICES_ENDPOINT=${CAPIF_HOSTNAME} \
@@ -133,7 +133,7 @@ pipeline{
                                     -v ${WORKSPACE}/libraries:/opt/robot-tests/libraries/ \
                                     -v ${WORKSPACE}/resources:/opt/robot-tests/resources/ \
                                     -v ${WORKSPACE}/results:/opt/robot-tests/results/ \
-                                    -v ${WORKSPACE}/tools/credentials.properties:/opt/robot-tests/credentials.properties netapp_robot_image  
+                                    -v ${WORKSPACE}/tools/credentials.properties:/opt/robot-tests/credentials.properties ${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}  
                                 """
                             }
                         }
