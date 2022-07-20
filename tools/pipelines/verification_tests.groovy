@@ -175,7 +175,7 @@ pipeline{
                 if(env.RUN_CAPIF_LOCALLY == 'true'){
                     dir ("${env.ROOT_DIRECTORY}/capif-services/services") {
                         echo 'Shutdown all capif services'
-                        sh 'clean_capif_docker_services.sh'
+                        sh './clean_capif_docker_services.sh'
                     }
                 }
                 sh 'docker kill netapp_robot && docker rm netapp_robot && docker rmi netapp_robot_image'
