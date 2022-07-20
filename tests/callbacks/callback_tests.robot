@@ -2,12 +2,13 @@
 Library         RequestsLibrary
 Library         Collections
 Library         /opt/robot-tests/pythonnetapp/emulator_utils.py
+Variables       /opt/robot-tests/libraries/ConfigVariables.py  CONFIG  /opt/robot-tests/tools/credentials.properties
 
 
 *** Variables ***
 ${APF_ID_NOT_VALID}         not-valid
-${CAPIF_HOSTNAME}           http://dummy-netapp_capif_callback_server_1:8080
-${NEF_HOSTNAME}             http://dummy-netapp_nef_callback_server_1:8080
+${CAPIF_HOSTNAME}           ${CONFIG.credentials.capif_callback_ip}:${CONFIG.credentials.capif_callback_port}
+${NEF_HOSTNAME}             ${CONFIG.credentials.nef_callback_ip}:${CONFIG.credentials.nef_callback_port}
 
 *** Keywords ***
 
