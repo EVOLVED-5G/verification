@@ -150,7 +150,7 @@ pipeline{
                                 robot /opt/robot-tests/tests/capif_invoker_tests/dummy-tests.robot; \
                                 robot /opt/robot-tests/tests/capif_discover_services/discover_services_tests.robot; \
                                 robot /opt/robot-tests/tests/capif_publish_services/publish_services_tests.robot; \
-                                robot /opt/robot-tests/tests/callbacks/callback_tests.robot.robot;"
+                                robot /opt/robot-tests/tests/callbacks/callback_tests.robot;"
                         """
                         // robot /opt/robot-tests/tests/tests/nef_monitoring_events/nef_monitoring_events_tests.robot;
                         // robot /opt/robot-tests/tests/tests/nef_as_sessions/nef_as_sessions_tests.robot;
