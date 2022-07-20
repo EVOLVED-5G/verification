@@ -7,7 +7,7 @@ Variables       /opt/robot-tests/libraries/ConfigVariables.py  CONFIG  /opt/robo
 
 *** Variables ***
 ${APF_ID_NOT_VALID}         not-valid
-${CAPIF_HOSTNAME}           http://capif_callback_server_1:${CONFIG.credentials.capif_callback_port}
+${CAPIF_HOSTNAME}           http://${CONFIG.credentials.capif_callback_ip}:${CONFIG.credentials.capif_callback_port}
 ${NEF_HOSTNAME}             http://dummy-netapp_nef_callback_server_1:8080
 
 *** Keywords ***
