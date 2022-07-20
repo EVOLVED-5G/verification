@@ -96,7 +96,7 @@ pipeline{
                     }
                     steps {
                         dir ("./nef-services") {
-                            sh 'ls && make prepare-dev-env && make build && make up && make db-init'
+                            sh 'ls && make prepare-dev-env && nohup make build & && nohup make up & && nohup make db-init &'
                         }
                     }
                 }
@@ -129,6 +129,7 @@ pipeline{
                                     -v ${ROOT_DIRECTORY}/${NetApp_repo}/capif_callback_server:/opt/robot-tests/capif-callback \
                                     -v ${ROOT_DIRECTORY}/${NetApp_repo}/nef_callback_server:/opt/robot-tests/nef-callback \
                                     -v ${ROOT_DIRECTORY}/${NetApp_repo}/pythonnetapp:/opt/robot-tests/pythonnetapp \
+                                    -v ${ROOT_DIRECTORY}/${NetApp_repo}/evolved5g:/opt/robot-tests/pythonnetapp/evolved5g \
                                     -v ${WORKSPACE}/tests:/opt/robot-tests/tests/ \
                                     -v ${WORKSPACE}/libraries:/opt/robot-tests/libraries/ \
                                     -v ${WORKSPACE}/resources:/opt/robot-tests/resources/ \
