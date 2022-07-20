@@ -2,19 +2,19 @@
 Library         RequestsLibrary
 Library         Collections
 Library         /opt/robot-tests/pythonnetapp/emulator_utils.py
-Variables       /opt/robot-tests/libraries/ConfigVariables.py    CONFIG    /opt/robot-tests/credentials.properties
+Variables       /opt/robot-tests/libraries/ConfigVariables.py  CONFIG  /opt/robot-tests/credentials.properties
 
 
 *** Variables ***
 ${APF_ID_NOT_VALID}         not-valid
-${CAPIF_HOSTNAME}           ${CONFIG.credentials.capif_callback_ip}:${CONFIG.credentials.capif_callback_port}
-${NEF_HOSTNAME}             ${CONFIG.credentials.nef_callback_ip}:${CONFIG.credentials.nef_callback_port}
+${CAPIF_HOSTNAME}           http://capif_callback_server_1:${CONFIG.credentials.capif_callback_port}
+${NEF_HOSTNAME}             http://dummy-netapp_nef_callback_server_1:8080
 
 *** Keywords ***
 
 capifcallback
 
-    Create Session    mysession    ${CONFIG.credentials.capif_callback_ip}:${CONFIG.credentials.capif_callback_port}     verify=True
+    Create Session    mysession    ${CAPIF_HOSTNAME}     verify=True
 
     ${resp}=    POST On Session    mysession    /capifcallbacks    
 
@@ -24,7 +24,7 @@ nefcallback
 
     ${NEF_HOSTNAME}=    emulator_utils.get_callback_server_for_nef_responses
 
-    Create Session    mysession     ${CONFIG.credentials.nef_callback_ip}:${CONFIG.credentials.nef_callback_port}    verify=True
+    Create Session    mysession     ${NEF_HOSTNAME}    verify=True
 
     ${resp}=    POST On Session    mysession    /nefcallbacks    
 
