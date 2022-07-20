@@ -122,7 +122,7 @@ pipeline{
                             )]) {
                                 sh """
                                     docker login --username ${USER} --password ${PASS} dockerhub.hi.inet
-                                    docker build -t netapp_robot_image ${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}
+                                    docker pull -t netapp_robot_image ${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}
                                     docker run -d -t --name netapp_robot \
                                     -e NEF_SERVICES_ENDPOINT=${NEF_HOSTNAME} \
                                     -e CAPIF_SERVICES_ENDPOINT=${CAPIF_HOSTNAME} \
