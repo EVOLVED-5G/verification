@@ -2,7 +2,7 @@
 Library         RequestsLibrary
 Library         Collections
 Library         /opt/robot-tests/pythonnetapp/emulator_utils.py
-Variables       /opt/robot-tests/libraries/ConfigVariables.py  CONFIG  /opt/robot-tests/tools/credentials.properties
+Variables       /opt/robot-tests/libraries/ConfigVariables.py    CONFIG    /opt/robot-tests/credentials.properties
 
 
 *** Variables ***
@@ -14,7 +14,7 @@ ${NEF_HOSTNAME}             ${CONFIG.credentials.nef_callback_ip}:${CONFIG.crede
 
 capifcallback
 
-    Create Session    mysession    ${CAPIF_HOSTNAME}     verify=True
+    Create Session    mysession    ${CONFIG.credentials.capif_callback_ip}:${CONFIG.credentials.capif_callback_port}     verify=True
 
     ${resp}=    POST On Session    mysession    /capifcallbacks    
 
@@ -24,7 +24,7 @@ nefcallback
 
     ${NEF_HOSTNAME}=    emulator_utils.get_callback_server_for_nef_responses
 
-    Create Session    mysession     ${NEF_HOSTNAME}    verify=True
+    Create Session    mysession     ${CONFIG.credentials.nef_callback_ip}:${CONFIG.credentials.nef_callback_port}    verify=True
 
     ${resp}=    POST On Session    mysession    /nefcallbacks    
 

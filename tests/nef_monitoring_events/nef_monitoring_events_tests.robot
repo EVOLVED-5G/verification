@@ -5,7 +5,7 @@ Library         /opt/robot-tests/pythonnetapp/netapp_to_nef.py
 Library         String
 Library         Collections
 Resource        /opt/robot-tests/resources/common/basicFunctions.robot
-Variables       /opt/robot-tests/libraries/ConfigVariables.py  CONFIG  /opt/robot-tests/tools/credentials.properties
+Variables       /opt/robot-tests/libraries/ConfigVariables.py    CONFIG    /opt/robot-tests/credentials.properties
 
 *** Variables ***
 ${NEF_HOSTNAME}                   ${CONFIG.credentials.nef_ip}:${CONFIG.credentials.nef_port}
