@@ -1,0 +1,7 @@
+robotframework 
+pandas 
+redis 
+flask 
+evolved5g 
+robotframework-requests 
+ConfigParser 
