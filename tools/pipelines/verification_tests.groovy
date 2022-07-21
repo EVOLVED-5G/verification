@@ -106,16 +106,26 @@ pipeline{
                     }
                 }
 
+                stage("Set up callback servers."){
+                    steps {
+                        dir ("$NetApp_repo") {
+                            sh """
+                                docker-compose up -d --build nef_callback_server capif_callback_server
+                                sleep 5
+                                docker-compose ps 
+                            """
+                            // nohup make db-init &
+                        }
+                    }
+                }
+
                 stage("Set up Robot FW container."){
                     steps {
                         dir ("${ROOT_DIRECTORY}") {
                             // sh """
                             //     touch .env && echo "ROBOT_IMAGE_NAME=${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}" > .env && echo "NETAPP_NAME=${NetApp_repo}"
                             // """
-                            // sh """
-                            //     docker-compose up -d --build
-                            //     docker ps -a
-                            // """
+
                             // -e NEF_SERVICES_ENDPOINT=${NEF_SERVICES_ENDPOINT}
                             // -e CAPIF_SERVICES_ENDPOINT=${CAPIF_SERVICES_ENDPOINT}
                             // ${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}
