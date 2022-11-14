@@ -111,7 +111,7 @@ pipeline{
                         dir ("$NetApp_repo") {
                             sh """
                                 docker network create demo-network
-                                docker-compose up -d --build nef_callback_server capif_callback_server
+                                docker-compose up -d --build nef_callback_server capif_callback_netapp
                                 sleep 5
                                 docker-compose ps 
                             """
@@ -195,7 +195,7 @@ pipeline{
                         sh './clean_capif_docker_services.sh'
                     }
                 }
-                sh 'docker kill netapp_robot && docker rm netapp_robot && docker rmi ${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION} && docker network create demo-network'
+                sh 'docker kill netapp_robot; docker rm netapp_robot; docker rmi ${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}; docker network create demo-network'
             }
 
             script {
