@@ -175,7 +175,6 @@ pipeline{
                         sh """
                             docker exec -t netapp_robot bash \
                             -c "robot /opt/robot-tests/tests/netapp_nef_monitoring/monitoring_verification.robot; \
-                                python3 /opt/robot-tests/libraries/scenario/clear_scenario.py capifcore
                                 robot /opt/robot-tests/tests/netapp_nef_sessionqos/sessionqos_verification.robot"
                         """
                     }
