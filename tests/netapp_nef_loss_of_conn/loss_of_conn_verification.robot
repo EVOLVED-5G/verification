@@ -42,24 +42,6 @@ Create subscription by Authorized NetApp
     Should Not Be Empty      ${resp}
 
 
-One-time request to the Monitoring Event API by Authorized NetApp
-
-    [Tags]    One_time_request_subscription_by_Authorized_NetApp
-
-    Copy File      /opt/robot-tests/credentials.properties    .
-
-    ${access_token}=    Run Keyword    1_netapp_to_nef.request_nef_token  ${NEF_HOSTNAME}  ${NEF_USER}  ${NEF_PASSWORD}
-    ${access_token}=    Catenate       ${access_token.access_token}
-
-    Log To Console      ${access_token}
-
-    ${resp}=            Run Keyword   1_netapp_to_nef.connection_monitoring_loss_of_conn  ${NEF_HOSTNAME}  ${access_token}  ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
-
-    Log To Console      ${resp}
-
-    Should Not Be Empty      ${resp}
-
-
 Create subscription when there is already an active subscription for a registered UE
 
     [Tags]    Create_subscription_when_already_active_by_Authorized_NetApp
