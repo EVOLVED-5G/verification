@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation   This test file contains the test cases of as sessions with QoS API functions in dummy netapp, refering to Nef API.
+Documentation   This test file contains the test cases of loss of connection events API functions in dummy netapp, refering to Nef API.
 Library         /opt/robot-tests/pythonnetapp/1_netapp_to_nef.py
 Library         /opt/robot-tests/libraries/scenario/import_scenario.py
 Library         String
@@ -28,7 +28,23 @@ Create subscription by Authorized NetApp
 
     [Tags]    Create_subscription_by_Authorized_NetApp
 
-    Run Keyword    import_scenario.import_scenario_to_nef  2  ${CONFIG.credentials.nef_ip}
+    Copy File      /opt/robot-tests/credentials.properties    .
+
+    ${access_token}=    Run Keyword    1_netapp_to_nef.request_nef_token  ${NEF_HOSTNAME}  ${NEF_USER}  ${NEF_PASSWORD}
+    ${access_token}=    Catenate       ${access_token.access_token}
+
+    Log To Console      ${access_token}
+
+    ${resp}=            Run Keyword   1_netapp_to_nef.connection_monitoring_loss_of_conn  ${NEF_HOSTNAME}  ${access_token}  ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
+
+    Log To Console      ${resp}
+
+    Should Not Be Empty      ${resp}
+
+
+One-time request to the Monitoring Event API by Authorized NetApp
+
+    [Tags]    One_time_request_subscription_by_Authorized_NetApp
 
     Copy File      /opt/robot-tests/credentials.properties    .
 
@@ -37,7 +53,7 @@ Create subscription by Authorized NetApp
 
     Log To Console      ${access_token}
 
-    ${resp}=            Run Keyword   1_netapp_to_nef.sessionqos_subscription  ${NEF_HOSTNAME}  ${access_token}  ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
+    ${resp}=            Run Keyword   1_netapp_to_nef.connection_monitoring_loss_of_conn  ${NEF_HOSTNAME}  ${access_token}  ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
 
     Log To Console      ${resp}
 
@@ -55,12 +71,11 @@ Create subscription when there is already an active subscription for a registere
 
     Log To Console      ${access_token}
 
-    ${resp}=            Run Keyword And Expect Error  *    1_netapp_to_nef.sessionqos_subscription  ${NEF_HOSTNAME}  ${access_token}  ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
+    ${resp}=            Run Keyword And Expect Error  *    1_netapp_to_nef.connection_monitoring_loss_of_conn  ${NEF_HOSTNAME}  ${access_token}  ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
 
     Log To Console      ${resp}
 
     Should Contain    ${resp}   409
-
 
 Create subscription by unAuthorized NetApp
 
@@ -68,7 +83,7 @@ Create subscription by unAuthorized NetApp
 
     Copy File      /opt/robot-tests/credentials.properties    .
 
-    ${resp}=            Run Keyword And Expect Error  *   1_netapp_to_nef.sessionqos_subscription  ${NEF_HOSTNAME}  ${non-auth}   ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
+    ${resp}=            Run Keyword And Expect Error  *   1_netapp_to_nef.connection_monitoring_loss_of_conn  ${NEF_HOSTNAME}  ${non-auth}   ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
 
     Log To Console      ${resp}
 

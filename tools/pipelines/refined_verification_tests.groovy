@@ -122,8 +122,11 @@ pipeline{
                     steps {
                         dir ("./nef-services") {
                             sh """
+                                set -e
                                 docker-compose ps
-                                ls -l backend/app/app/core/certificates/
+                                cp $WORKSPACE/tools/checks/nef_check.sh .
+                                chmod +x nef_check.sh
+                                ./nef_check.sh
                             """
                         }
                     }
@@ -134,7 +137,9 @@ pipeline{
                         dir("$NetApp_repo") {
                             sh """
                                 docker-compose ps
-                                ls -l pythonnetapp/capif_onboarding
+                                cp $WORKSPACE/tools/checks/dummy_netapp_check.sh .
+                                chmod +x dummy_netapp_check.sh
+                                ./dummy_netapp_check.sh
                             """
                         }
                     }
@@ -175,6 +180,8 @@ pipeline{
                         sh """
                             docker exec -t netapp_robot bash \
                             -c "robot /opt/robot-tests/tests/netapp_nef_monitoring/monitoring_verification.robot; \
+                                robot /opt/robot-tests/tests/netapp_nef_loss_of_conn/loss_of_conn_verification.robot; \
+                                robot /opt/robot-tests/tests/netapp_nef_ue_rechability/ue_rechability_verification.robot; \
                                 robot /opt/robot-tests/tests/netapp_nef_sessionqos/sessionqos_verification.robot"
                         """
                     }

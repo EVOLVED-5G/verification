@@ -83,8 +83,6 @@ Create subscription by unAuthorized NetApp
 
     [Tags]    Create_subscription_when_already_active_by_Authorized_NetApp
 
-    Run Keyword    import_scenario.import_scenario_to_nef  1  ${CONFIG.credentials.nef_ip}
-
     Copy File      /opt/robot-tests/credentials.properties    .
 
     ${resp}=            Run Keyword And Expect Error  *   1_netapp_to_nef.monitor_subscription  2  ${NEF_HOSTNAME}  ${non-auth}   ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
