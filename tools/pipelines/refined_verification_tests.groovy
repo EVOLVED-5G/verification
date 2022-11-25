@@ -181,7 +181,7 @@ pipeline{
                             docker exec -t netapp_robot bash \
                             -c "robot /opt/robot-tests/tests/netapp_nef_monitoring/monitoring_verification.robot; \
                                 robot /opt/robot-tests/tests/netapp_nef_loss_of_conn/loss_of_conn_verification.robot; \
-                                robot /opt/robot-tests/tests/netapp_nef_ue_rechability/ue_rechability_verification.robot; \
+                                robot /opt/robot-tests/tests/netapp_nef_ue_reachability/ue_reachability_verification.robot; \
                                 robot /opt/robot-tests/tests/netapp_nef_sessionqos/sessionqos_verification.robot"
                         """
                     }

@@ -1,5 +1,5 @@
 *** Settings ***
-Documentation   This test file contains the test cases of ue rechability events API functions in dummy netapp, refering to Nef API.
+Documentation   This test file contains the test cases of ue reachability events API functions in dummy netapp, refering to Nef API.
 Library         /opt/robot-tests/pythonnetapp/1_netapp_to_nef.py
 Library         /opt/robot-tests/libraries/scenario/import_scenario.py
 Library         String
@@ -35,7 +35,7 @@ Create subscription by Authorized NetApp
 
     Log To Console      ${access_token}
 
-    ${resp}=            Run Keyword   1_netapp_to_nef.monitor_subscription  2  ${NEF_HOSTNAME}  ${access_token}  ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
+    ${resp}=            Run Keyword   1_netapp_to_nef.connection_monitoring_ue_reachability  ${NEF_HOSTNAME}  ${access_token}  ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
 
     Log To Console      ${resp}
 
@@ -53,7 +53,7 @@ Create subscription when there is already an active subscription for a registere
 
     Log To Console      ${access_token}
 
-    ${resp}=            Run Keyword And Expect Error  *    1_netapp_to_nef.monitor_subscription  2  ${NEF_HOSTNAME}  ${access_token}  ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
+    ${resp}=            Run Keyword And Expect Error  *    1_netapp_to_nef.connection_monitoring_ue_reachability  ${NEF_HOSTNAME}  ${access_token}  ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
 
     Log To Console      ${resp}
 
@@ -65,7 +65,7 @@ Create subscription by unAuthorized NetApp
 
     Copy File      /opt/robot-tests/credentials.properties    .
 
-    ${resp}=            Run Keyword And Expect Error  *   1_netapp_to_nef.monitor_subscription  2  ${NEF_HOSTNAME}  ${non-auth}   ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
+    ${resp}=            Run Keyword And Expect Error  *   1_netapp_to_nef.connection_monitoring_ue_reachability  ${NEF_HOSTNAME}  ${non-auth}   ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
 
     Log To Console      ${resp}
 
