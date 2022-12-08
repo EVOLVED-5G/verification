@@ -28,8 +28,6 @@ Create subscription by Authorized NetApp
 
     [Tags]    Create_subscription_by_Authorized_NetApp
 
-    Run Keyword    import_scenario.import_scenario_to_nef  2  ${CONFIG.credentials.nef_ip}
-
     Copy File      /opt/robot-tests/credentials.properties    .
 
     ${access_token}=    Run Keyword    1_netapp_to_nef.request_nef_token  ${NEF_HOSTNAME}  ${NEF_USER}  ${NEF_PASSWORD}

@@ -172,6 +172,14 @@ pipeline{
                         }
                     }
                 }
+                stage("Initialize NEF DB"){
+                    steps{
+                        sh """
+                            docker exec -t netapp_robot bash \
+                            -c "python3 /opt/robot-tests/libraries/scenario/db-init.py capifcore"
+                        """
+                    }
+                }
                 stage("Run test cases."){
                     steps{
                         sh """
