@@ -6,6 +6,7 @@ pipeline{
 
     parameters{
         string(name: "NetApp_repo", defaultValue: "dummy-netapp", description: "The name of the repository of the NetApp to be used." )
+        string(name: "NetApp_repo_branch", defaultValue: "main", description: "The name of the branch repository of the NetApp to be used." )
         string(name: 'ROBOT_DOCKER_IMAGE_NAME', defaultValue: 'dockerhub.hi.inet/dummy-netapp-testing/robot-test-image', description: 'Robot Docker image name')
         string(name: 'ROBOT_DOCKER_IMAGE_VERSION', defaultValue: '1.0', description: 'Robot Docker image version')
     }
@@ -25,7 +26,7 @@ pipeline{
         stage("Checkout code"){
             steps{
                 checkout([$class: 'GitSCM',
-                          branches: [[name: 'main']],
+                          branches: [[name: '${NetApp_repo_branch}']],
                           doGenerateSubmoduleConfigurations: false,
                           extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: "$NetApp_repo"]],
                           gitTool: 'Default',
