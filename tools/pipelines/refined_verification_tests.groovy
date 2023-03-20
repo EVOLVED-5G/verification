@@ -93,7 +93,6 @@ pipeline{
                     steps {
                         dir ("./nef-services") {
                             sh """
-                                sed -i "s/3.9.7/3.9.15/g" backend/app/pyproject.toml
                                 sed -i "s/EXTERNAL_NET=false/EXTERNAL_NET=true/g" env-file-for-local.dev
                                 make prepare-dev-env
                                 make build
@@ -118,10 +117,10 @@ pipeline{
 
         }
         stage("Verify setup"){
-            stages{
-                stage("Verify Nef registration to Capif"){
+            stages {
+                stage("Verify Nef registration to Capif") {
                     steps {
-                        dir ("./nef-services") {
+                        dir("./nef-services") {
                             sh """
                                 set -e
                                 docker-compose ps
@@ -132,18 +131,6 @@ pipeline{
                         }
                     }
 
-                }
-                stage("Verify Netapp registration to Capif"){
-                    steps {
-                        dir("$NetApp_repo") {
-                            sh """
-                                docker-compose ps
-                                cp $WORKSPACE/tools/checks/dummy_netapp_check.sh .
-                                chmod +x dummy_netapp_check.sh
-                                ./dummy_netapp_check.sh
-                            """
-                        }
-                    }
                 }
             }
         }
@@ -184,14 +171,7 @@ pipeline{
                 stage("Run test cases."){
                     steps{
                         sh """
-                            docker exec -t netapp_robot bash -c "ls -la"
-                        """
-                        sh """
-                            docker exec -t netapp_robot bash \
-                            -c "robot /opt/robot-tests/tests/netapp_nef_monitoring/monitoring_verification.robot; \
-                                robot /opt/robot-tests/tests/netapp_nef_loss_of_conn/loss_of_conn_verification.robot; \
-                                robot /opt/robot-tests/tests/netapp_nef_ue_reachability/ue_reachability_verification.robot; \
-                                robot /opt/robot-tests/tests/netapp_nef_sessionqos/sessionqos_verification.robot"
+                            docker exec -t netapp_robot bash -c "robot tests"
                         """
                     }
                 }
@@ -206,7 +186,7 @@ pipeline{
                 if(env.RUN_NEF_LOCALLY == 'true'){
                     dir ("${env.ROOT_DIRECTORY}/nef-services") {
                         echo 'Shutdown all nef services'
-                        sh 'make down-v'
+                        sh 'docker-compose --profile debug down -v --rmi all'
                     }
                 }
                 if(env.RUN_CAPIF_LOCALLY == 'true'){
@@ -215,16 +195,17 @@ pipeline{
                         sh './clean_capif_docker_services.sh'
                     }
                 }
-                sh """
-                    docker kill netapp_robot
-                    docker rmi ${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}
-                """
+
                 dir ("$NetApp_repo") {
                     sh """
-                        docker-compose down -v
-                        docker network rm demo-network
+                        docker-compose down -v --rmi all
                     """
                 }
+                sh """
+                    docker kill netapp_robot
+                    docker network rm demo-network
+                    docker rmi ${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}
+                """
             }
 
             script {
