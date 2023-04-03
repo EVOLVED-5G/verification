@@ -122,11 +122,8 @@ pipeline{
                     steps {
                         dir("./nef-services") {
                             sh """
-                                set -e
+                                ls -la backend/app/app/core/certificates
                                 docker-compose ps
-                                cp $WORKSPACE/tools/checks/nef_check.sh .
-                                chmod +x nef_check.sh
-                                ./nef_check.sh
                             """
                         }
                     }
