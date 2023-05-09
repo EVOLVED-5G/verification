@@ -1,7 +1,7 @@
 robotframework 
 pandas 
 redis 
-flask 
+flask
 evolved5g >= 1.0.0
 robotframework-requests
 robotframework-pabot
