@@ -2,6 +2,11 @@ robotframework
 pandas 
 redis 
 flask 
-evolved5g 
-robotframework-requests 
-ConfigParser 
+evolved5g >= 1.0.0
+robotframework-requests
+robotframework-pabot
+requests == 2.26.0
+configparser
+pyopenssl
+pyjwt
+termcolor
