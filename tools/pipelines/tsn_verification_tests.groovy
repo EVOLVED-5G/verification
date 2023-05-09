@@ -105,7 +105,7 @@ pipeline{
                     steps {
                         dir ("$NetApp_repo") {
                             sh """
-                                sed -i 's+"capif_callback_url": "http://192.168.1.13:5000"+"capif_callback_url": "http://host.docker.internal:8086"+g' pythonnetapp/capif_registration.json
+                                sed -i 's+"capif_callback_url": "http://192.168.1.13:5000"+"capif_callback_url": "http://host.docker.internal:8086"+g' python_application/capif_registration.json
                                 ./run.sh
                             """
                         }
