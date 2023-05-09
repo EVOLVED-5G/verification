@@ -103,7 +103,7 @@ pipeline{
 
                 stage("Set up dummy netapp."){
                     steps {
-                        dir ("$NetApp_repo") {
+                        dir ("$NetApp_repo/src") {
                             sh """
                                 sed -i 's+"capif_callback_url": "http://192.168.1.13:5000"+"capif_callback_url": "http://host.docker.internal:8086"+g' python_application/capif_registration.json
                                 ./run.sh
@@ -174,7 +174,7 @@ pipeline{
                     }
                 }
 
-                dir ("$NetApp_repo") {
+                dir ("$NetApp_repo/src") {
                     sh """
                         docker compose down -v --rmi all --remove-orphans
                         docker network rm demo-network
