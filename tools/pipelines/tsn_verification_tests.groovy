@@ -5,10 +5,10 @@ pipeline{
     agent { node { label 'evol5-slave' }  }
 
     parameters{
-        string(name: "NetApp_repo", defaultValue: "dummy-netapp", description: "The name of the repository of the NetApp to be used." )
+        string(name: "NetApp_repo", defaultValue: "dummy-network-application", description: "The name of the repository of the Network Application to be used." )
         string(name: "NetApp_repo_branch", defaultValue: "main", description: "The name of the branch repository of the NetApp to be used." )
         string(name: 'ROBOT_DOCKER_IMAGE_NAME', defaultValue: 'dockerhub.hi.inet/dummy-netapp-testing/robot-test-image', description: 'Robot Docker image name')
-        string(name: 'ROBOT_DOCKER_IMAGE_VERSION', defaultValue: '1.0', description: 'Robot Docker image version')
+        string(name: 'ROBOT_DOCKER_IMAGE_VERSION', defaultValue: '3.1.1', description: 'Robot Docker image version')
     }
 
     environment {
@@ -36,18 +36,18 @@ pipeline{
             }
         }
 
-        stage("Checkout nef services"){
+        stage("Checkout tsn services"){
             when {
-                expression { RUN_NEF_LOCALLY == 'true' }
+                expression { RUN_CAPIF_LOCALLY == 'true' }
             }
             steps{
                 checkout([$class: 'GitSCM',
-                          branches: [[name: 'main']],
+                          branches: [[name: 'logging']],
                           doGenerateSubmoduleConfigurations: false,
-                          extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: "nef-services"]],
+                          extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: "tsn-frontend"]],
                           gitTool: 'Default',
                           submoduleCfg: [],
-                          userRemoteConfigs: [[url: 'https://github.com/EVOLVED-5G/NEF_emulator.git']]
+                          userRemoteConfigs: [[url: 'https://github.com/EVOLVED-5G/TSN_FrontEnd.git']]
                 ])
             }
         }
@@ -86,17 +86,16 @@ pipeline{
                     }
                 }
 
-                stage("Set up nef services."){
+                stage("Set up tsn frontend."){
                     when {
                         expression { RUN_NEF_LOCALLY == 'true' }
                     }
                     steps {
-                        dir ("./nef-services") {
+                        dir ("./tsn-frontend") {
                             sh """
-                                sed -i "s/EXTERNAL_NET=false/EXTERNAL_NET=true/g" env-file-for-local.dev
-                                make prepare-dev-env
-                                make build
-                                make upd
+                                ./build.sh
+                                docker run -d --add-host capifcore:host-gateway -p 8899:8899 --name tsn-frontend --restart unless-stopped tsn_frontend
+                                docker logs tsn-frontend
                             """
                         }
                     }
@@ -116,20 +115,6 @@ pipeline{
             }
 
         }
-        stage("Verify setup"){
-            stages {
-                stage("Verify Nef registration to Capif") {
-                    steps {
-                        dir("./nef-services") {
-                            sh """
-                                ls -la backend/app/app/core/certificates
-                                docker-compose ps
-                            """
-                        }
-                    }
-                }
-            }
-        }
         stage ("Setup Robot FW && Run tests"){
             stages{
                 stage("Set up Robot FW container."){
@@ -141,27 +126,20 @@ pipeline{
                                     passwordVariable: 'PASS'
                             )]) {
                                 sh """
-                                    docker run -d -t --name netapp_robot \
-                                        --rm --add-host capifcore:host-gateway \
-                                        -v ${ROOT_DIRECTORY}/${NetApp_repo}/capif_callback_server:/opt/robot-tests/capif-callback \
-                                        -v ${ROOT_DIRECTORY}/${NetApp_repo}/nef_callback_server:/opt/robot-tests/nef-callback \
-                                        -v ${ROOT_DIRECTORY}/${NetApp_repo}/pythonnetapp:/opt/robot-tests/pythonnetapp \
+                                    cp $ROOT_DIRECTORY$NetApp_repo/src/.env ${WORKSPACE}/.env
+                                    sed -i 's+PATH_TO_CERTS=/usr/src/app/capif_onboarding+PATH_TO_CERTS=/opt/robot-tests/pythonnetapp/capif_onboarding+g' ${WORKSPACE}/.env
+                                    docker run -d -t --name netapp_robot \\
+                                        --rm --add-host capifcore:host-gateway \\
+                                        --add-host host.docker.internal:host-gateway \\
+                                        --env-file ${WORKSPACE}/.env \\
+                                        -v ${ROOT_DIRECTORY}${NetApp_repo}/capif_callback_server:/opt/robot-tests/capif-callback \\
+                                        -v ${ROOT_DIRECTORY}${NetApp_repo}/nef_callback_server:/opt/robot-tests/nef-callback \\
+                                        -v ${ROOT_DIRECTORY}${NetApp_repo}/src/python_application:/opt/robot-tests/pythonnetapp \\
                                         -v ${WORKSPACE}/tests:/opt/robot-tests/tests/ \
-                                        -v ${WORKSPACE}/libraries:/opt/robot-tests/libraries/ \
-                                        -v ${WORKSPACE}/resources:/opt/robot-tests/resources/ \
-                                        -v ${WORKSPACE}/results:/opt/robot-tests/results/ \
-                                        -v ${WORKSPACE}/tools/credentials.properties:/opt/robot-tests/credentials.properties ${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}  
+                                        -v ${WORKSPACE}/results:/opt/robot-tests/results/ ${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}  
                                 """
                             }
                         }
-                    }
-                }
-                stage("Initialize NEF DB"){
-                    steps{
-                        sh """
-                            docker exec -t netapp_robot bash \
-                            -c "python3 /opt/robot-tests/libraries/scenario/db-init.py capifcore"
-                        """
                     }
                 }
                 stage("Run test cases."){
@@ -179,10 +157,14 @@ pipeline{
     post{
         always{
             script {
-                if(env.RUN_NEF_LOCALLY == 'true'){
-                    dir ("${env.ROOT_DIRECTORY}/nef-services") {
-                        echo 'Shutdown all nef services'
-                        sh 'docker-compose --profile debug down -v --rmi all'
+                if(env.RUN_CAPIF_LOCALLY == 'true'){
+                    dir ("${env.ROOT_DIRECTORY}/tsn-frontend") {
+                        echo 'Shutdown all tsn services'
+                        sh """
+                            docker kill tsn-frontend
+                            docker rm tsn-frontend
+                            docker rmi tsn_frontend:latest
+                        """
                     }
                 }
                 if(env.RUN_CAPIF_LOCALLY == 'true'){
@@ -194,12 +176,12 @@ pipeline{
 
                 dir ("$NetApp_repo") {
                     sh """
-                        docker-compose down -v --rmi all
+                        docker compose down -v --rmi all --remove-orphans
+                        docker network rm demo-network
                     """
                 }
                 sh """
                     docker kill netapp_robot
-                    docker network rm demo-network
                     docker rmi ${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}
                 """
             }
