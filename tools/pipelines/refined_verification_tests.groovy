@@ -5,10 +5,10 @@ pipeline{
     agent { node { label 'evol5-slave' }  }
 
     parameters{
-        string(name: "NetApp_repo", defaultValue: "dummy-netapp", description: "The name of the repository of the NetApp to be used." )
+        string(name: "NetApp_repo", defaultValue: "dummy-network-application", description: "The name of the repository of the network applicaiton to be used." )
         string(name: "NetApp_repo_branch", defaultValue: "main", description: "The name of the branch repository of the NetApp to be used." )
         string(name: 'ROBOT_DOCKER_IMAGE_NAME', defaultValue: 'dockerhub.hi.inet/dummy-netapp-testing/robot-test-image', description: 'Robot Docker image name')
-        string(name: 'ROBOT_DOCKER_IMAGE_VERSION', defaultValue: '1.0', description: 'Robot Docker image version')
+        string(name: 'ROBOT_DOCKER_IMAGE_VERSION', defaultValue: '3.1.1', description: 'Robot Docker image version')
     }
 
     environment {
@@ -93,9 +93,8 @@ pipeline{
                     steps {
                         dir ("./nef-services") {
                             sh """
-                                sed -i "s/EXTERNAL_NET=false/EXTERNAL_NET=true/g" env-file-for-local.dev
                                 make prepare-dev-env
-                                make build
+                                make build-no-cache
                                 make upd
                             """
                         }
@@ -104,9 +103,9 @@ pipeline{
 
                 stage("Set up dummy netapp."){
                     steps {
-                        dir ("$NetApp_repo") {
+                        dir ("$NetApp_repo/src") {
                             sh """
-                                sed -i 's+"capif_callback_url": "http://192.168.1.13:5000"+"capif_callback_url": "http://host.docker.internal:8086"+g' pythonnetapp/capif_registration.json
+                                sed -i 's+"capif_callback_url": "http://192.168.1.13:5000"+"capif_callback_url": "http://host.docker.internal:8086"+g' python_application/capif_registration.json
                                 ./run.sh
                             """
                         }
@@ -143,9 +142,10 @@ pipeline{
                                 sh """
                                     docker run -d -t --name netapp_robot \
                                         --rm --add-host capifcore:host-gateway \
-                                        -v ${ROOT_DIRECTORY}/${NetApp_repo}/capif_callback_server:/opt/robot-tests/capif-callback \
-                                        -v ${ROOT_DIRECTORY}/${NetApp_repo}/nef_callback_server:/opt/robot-tests/nef-callback \
-                                        -v ${ROOT_DIRECTORY}/${NetApp_repo}/pythonnetapp:/opt/robot-tests/pythonnetapp \
+                                        --add-host host.docker.internal:host-gateway \
+                                        -v ${ROOT_DIRECTORY}${NetApp_repo}/src/capif_callback_server:/opt/robot-tests/capif-callback \
+                                        -v ${ROOT_DIRECTORY}${NetApp_repo}/src/nef_callback_server:/opt/robot-tests/nef-callback \
+                                        -v ${ROOT_DIRECTORY}${NetApp_repo}/src/python_application:/opt/robot-tests/pythonnetapp \
                                         -v ${WORKSPACE}/tests:/opt/robot-tests/tests/ \
                                         -v ${WORKSPACE}/libraries:/opt/robot-tests/libraries/ \
                                         -v ${WORKSPACE}/resources:/opt/robot-tests/resources/ \
@@ -167,7 +167,7 @@ pipeline{
                 stage("Run test cases."){
                     steps{
                         sh """
-                            docker exec -t netapp_robot bash -c "robot tests"
+                            docker exec -t netapp_robot bash -c "sleep 30s && robot tests"
                         """
                     }
                 }
@@ -182,7 +182,7 @@ pipeline{
                 if(env.RUN_NEF_LOCALLY == 'true'){
                     dir ("${env.ROOT_DIRECTORY}/nef-services") {
                         echo 'Shutdown all nef services'
-                        sh 'docker-compose --profile debug down -v --rmi all'
+                        sh 'docker-compose --profile debug down -v'
                     }
                 }
                 if(env.RUN_CAPIF_LOCALLY == 'true'){
@@ -192,14 +192,14 @@ pipeline{
                     }
                 }
 
-                dir ("$NetApp_repo") {
+                dir ("$NetApp_repo/src") {
                     sh """
-                        docker-compose down -v --rmi all
+                        docker compose down -v --rmi all --remove-orphans
+                        docker network rm demo-network
                     """
                 }
                 sh """
                     docker kill netapp_robot
-                    docker network rm demo-network
                     docker rmi ${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}
                 """
             }

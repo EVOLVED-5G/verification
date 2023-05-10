@@ -1,6 +1,6 @@
 *** Settings ***
 Documentation   This test file contains the test cases of monitoring events API functions in dummy netapp, refering to Nef API.
-Library         /opt/robot-tests/pythonnetapp/0_netapp_to_nef.py
+Library         /opt/robot-tests/pythonnetapp/0_network_app_to_nef.py
 Library         /opt/robot-tests/libraries/scenario/import_scenario.py
 Library         String
 Library         Collections
@@ -11,7 +11,6 @@ Variables       /opt/robot-tests/libraries/ConfigVariables.py    CONFIG    /opt/
 ${NEF_HOSTNAME}                   https://${CONFIG.credentials.nef_ip}:${CONFIG.credentials.nef_port}
 ${NEF_USER}                       ${CONFIG.credentials.nef_user}
 ${NEF_PASSWORD}                   ${CONFIG.credentials.nef_pass}
-${NEF_HOSTNAME}                   http://${CONFIG.credentials.nef_ip}:${CONFIG.credentials.nef_port}
 ${non-auth}                       eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY0NzYxNDQxNSwianRpIjoiZTc3MDhjMmMtZjFiMi00MDc1LWFlNTctM2YxYmYyYmU4YWY1IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImN1c3RvbTRuZXRhcHAgaW52b2tlciIsIm5iZiI6MTY0NzYxNDQxNSwiZXhwIjoxNjQ3NjE1MzE1fQ.8CWiqYTtje4AjDmNqA6OjmYMJF3M90NM4GnYIOyHNnI
 ${API_INVOKER_NOT_REGISTERED}     not-valid
 ${CERTIFICATE_FOLDER}             ${CONFIG.credentials.certificate_folder}
@@ -30,12 +29,12 @@ Create subscription by Authorized NetApp
 
     Copy File      /opt/robot-tests/credentials.properties    .
 
-    ${access_token}=    Run Keyword    0_netapp_to_nef.request_nef_token  ${NEF_HOSTNAME}  ${NEF_USER}  ${NEF_PASSWORD}
+    ${access_token}=    Run Keyword    0_network_app_to_nef.request_nef_token  ${NEF_HOSTNAME}  ${NEF_USER}  ${NEF_PASSWORD}
     ${access_token}=    Catenate       ${access_token.access_token}
 
     Log To Console      ${access_token}
 
-    ${resp}=            Run Keyword   0_netapp_to_nef.monitor_subscription  2  ${NEF_HOSTNAME}  ${access_token}  ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
+    ${resp}=            Run Keyword   0_network_app_to_nef.monitor_subscription  2  ${NEF_HOSTNAME}  ${access_token}  ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
 
     Log To Console      ${resp}
 
@@ -48,12 +47,12 @@ One-time request to the Monitoring Event API by Authorized NetApp
 
     Copy File      /opt/robot-tests/credentials.properties    .
 
-    ${access_token}=    Run Keyword    0_netapp_to_nef.request_nef_token  ${NEF_HOSTNAME}  ${NEF_USER}  ${NEF_PASSWORD}
+    ${access_token}=    Run Keyword    0_network_app_to_nef.request_nef_token  ${NEF_HOSTNAME}  ${NEF_USER}  ${NEF_PASSWORD}
     ${access_token}=    Catenate       ${access_token.access_token}
 
     Log To Console      ${access_token}
 
-    ${resp}=            Run Keyword   0_netapp_to_nef.monitor_subscription  1  ${NEF_HOSTNAME}  ${access_token}  ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
+    ${resp}=            Run Keyword   0_network_app_to_nef.monitor_subscription  1  ${NEF_HOSTNAME}  ${access_token}  ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
 
     Log To Console      ${resp}
 
@@ -66,12 +65,12 @@ Create subscription when there is already an active subscription for a registere
 
     Copy File      /opt/robot-tests/credentials.properties    .
 
-    ${access_token}=    Run Keyword    0_netapp_to_nef.request_nef_token  ${NEF_HOSTNAME}  ${NEF_USER}  ${NEF_PASSWORD}
+    ${access_token}=    Run Keyword    0_network_app_to_nef.request_nef_token  ${NEF_HOSTNAME}  ${NEF_USER}  ${NEF_PASSWORD}
     ${access_token}=    Catenate       ${access_token.access_token}
 
     Log To Console      ${access_token}
 
-    ${resp}=            Run Keyword And Expect Error  *    0_netapp_to_nef.monitor_subscription  2  ${NEF_HOSTNAME}  ${access_token}  ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
+    ${resp}=            Run Keyword And Expect Error  *    0_network_app_to_nef.monitor_subscription   2  ${NEF_HOSTNAME}  ${access_token}  ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
 
     Log To Console      ${resp}
 
@@ -83,7 +82,7 @@ Create subscription by unAuthorized NetApp
 
     Copy File      /opt/robot-tests/credentials.properties    .
 
-    ${resp}=            Run Keyword And Expect Error  *   0_netapp_to_nef.monitor_subscription  2  ${NEF_HOSTNAME}  ${non-auth}   ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
+    ${resp}=            Run Keyword And Expect Error  *   0_network_app_to_nef.monitor_subscription  2  ${NEF_HOSTNAME}  ${non-auth}   ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
 
     Log To Console      ${resp}
 
