@@ -40,4 +40,4 @@ Clear Profile Configuration
     [Tags]    apply_tsn_profile
     Log To Console      ${identifier}
     Log To Console      ${clearance_token}
-    Run Keyword     Crear Profile Configuration     ${identifier}   ${clearance_token}
+    Run Keyword     Clear Profile Configuration     ${identifier}   ${clearance_token}
