@@ -9,16 +9,15 @@ pipeline{
         string(name: "NetApp_repo_branch", defaultValue: "main", description: "The name of the branch repository of the NetApp to be used." )
         string(name: 'ROBOT_DOCKER_IMAGE_NAME', defaultValue: 'dockerhub.hi.inet/dummy-netapp-testing/robot-test-image', description: 'Robot Docker image name')
         string(name: 'ROBOT_DOCKER_IMAGE_VERSION', defaultValue: '3.1.1', description: 'Robot Docker image version')
+        string(name: 'SETUP_SCRIPT', defaultValue: 'src/run.sh', description: 'Script to deploy network application')
+        string(name: 'UNINSTALL_SCRIPT', defaultValue: 'src/cleanup_docker_containers.sh', description: 'Script to uninstall network application')
+        string(name: 'CAPIF_REGISTRATION_CONFIG_PATH', defaultValue: 'src/python_application/capif_registration.json', description: 'Configuration file for capif registration')
+        string(name: 'CERTIFICATES_FOLDER_PATH', defaultValue: 'src/python_application/capif_onboarding', description: 'Folder to store certs after capif registration')
+        string(name: 'VERIFICATION_FILE', defaultValue: 'src/python_application/0_network_app_to_nef.py', description: 'Python file that contains functions to verify')
     }
 
     environment {
         ROOT_DIRECTORY = "${WORKSPACE}/"
-        ROBOT_TESTS_DIRECTORY = "${WORKSPACE}/tests"
-        ROBOT_RESULTS_DIRECTORY = "${WORKSPACE}/results"
-        NEF_SERVICES_ENDPOINT = ""
-        CAPIF_SERVICES_ENDPOINT = "http://openshift.evolved-5g.eu/"
-        RUN_NEF_LOCALLY = "true"
-        RUN_CAPIF_LOCALLY = "true"
     }
 
     stages{
@@ -37,9 +36,6 @@ pipeline{
         }
 
         stage("Checkout nef services"){
-            when {
-                expression { RUN_NEF_LOCALLY == 'true' }
-            }
             steps{
                 checkout([$class: 'GitSCM',
                           branches: [[name: 'main']],
@@ -53,9 +49,6 @@ pipeline{
         }
 
         stage("Checkout capif services"){
-            when {
-                expression { RUN_CAPIF_LOCALLY == 'true' }
-            }
             steps{
                 checkout([$class: 'GitSCM',
                           branches: [[name: 'develop']],
@@ -70,15 +63,10 @@ pipeline{
 
         stage("Set up environment."){
             stages{
-
                 stage("Set up capif services."){
-                    when {
-                        expression { RUN_CAPIF_LOCALLY == 'true' }
-                    }
                     steps {
-                        dir ("./capif-services") {
+                        dir ("./capif-services/services") {
                             sh """
-                                ls -la && cd services
                                 sed -i "s/image: mongo:6.0.2/image: mongo:4.4.17/g" docker-compose.yml
                                 ./run.sh
                             """
@@ -87,9 +75,6 @@ pipeline{
                 }
 
                 stage("Set up nef services."){
-                    when {
-                        expression { RUN_NEF_LOCALLY == 'true' }
-                    }
                     steps {
                         dir ("./nef-services") {
                             sh """
@@ -103,10 +88,15 @@ pipeline{
 
                 stage("Set up dummy netapp."){
                     steps {
-                        dir ("$NetApp_repo/src") {
+                        dir ("$NetApp_repo") {
                             sh """
-                                sed -i 's+"capif_callback_url": "http://192.168.1.13:5000"+"capif_callback_url": "http://host.docker.internal:8086"+g' python_application/capif_registration.json
-                                ./run.sh
+                                sed -i 's+"capif_callback_url": "http://192.168.1.13:5000"+"capif_callback_url": "http://host.docker.internal:8086"+g' ${CAPIF_REGISTRATION_CONFIG_PATH}
+                                parentdir=\$(dirname "${SETUP_SCRIPT}")
+                                file_to_run=\$(basename -- ${SETUP_SCRIPT})
+                                echo \$parentdir
+                                echo \$file_to_run
+                                cd \$parentdir
+                                bash \$file_to_run
                             """
                         }
                     }
@@ -114,20 +104,6 @@ pipeline{
 
             }
 
-        }
-        stage("Verify setup"){
-            stages {
-                stage("Verify Nef registration to Capif") {
-                    steps {
-                        dir("./nef-services") {
-                            sh """
-                                ls -la backend/app/app/core/certificates
-                                docker-compose ps
-                            """
-                        }
-                    }
-                }
-            }
         }
         stage ("Setup Robot FW && Run tests"){
             stages{
@@ -143,9 +119,8 @@ pipeline{
                                     docker run -d -t --name netapp_robot \
                                         --rm --add-host capifcore:host-gateway \
                                         --add-host host.docker.internal:host-gateway \
-                                        -v ${ROOT_DIRECTORY}${NetApp_repo}/src/capif_callback_server:/opt/robot-tests/capif-callback \
-                                        -v ${ROOT_DIRECTORY}${NetApp_repo}/src/nef_callback_server:/opt/robot-tests/nef-callback \
-                                        -v ${ROOT_DIRECTORY}${NetApp_repo}/src/python_application:/opt/robot-tests/pythonnetapp \
+                                        -v ${ROOT_DIRECTORY}${NetApp_repo}/${VERIFICATION_FILE}:/opt/robot-tests/netapp_to_nef.py \
+                                        -v ${ROOT_DIRECTORY}${NetApp_repo}/${CERTIFICATES_FOLDER_PATH}:/opt/robot-tests/capif_onboarding \
                                         -v ${WORKSPACE}/tests:/opt/robot-tests/tests/ \
                                         -v ${WORKSPACE}/libraries:/opt/robot-tests/libraries/ \
                                         -v ${WORKSPACE}/resources:/opt/robot-tests/resources/ \
@@ -179,22 +154,23 @@ pipeline{
     post{
         always{
             script {
-                if(env.RUN_NEF_LOCALLY == 'true'){
-                    dir ("${env.ROOT_DIRECTORY}/nef-services") {
-                        echo 'Shutdown all nef services'
-                        sh 'docker-compose --profile debug down -v'
-                    }
+                dir ("${env.ROOT_DIRECTORY}/nef-services") {
+                    echo 'Shutdown all nef services'
+                    sh 'docker-compose --profile debug down -v'
                 }
-                if(env.RUN_CAPIF_LOCALLY == 'true'){
-                    dir ("${env.ROOT_DIRECTORY}/capif-services/services") {
-                        echo 'Shutdown all capif services'
-                        sh './clean_capif_docker_services.sh'
-                    }
+                dir ("${env.ROOT_DIRECTORY}/capif-services/services") {
+                    echo 'Shutdown all capif services'
+                    sh './clean_capif_docker_services.sh'
                 }
 
                 dir ("$NetApp_repo/src") {
                     sh """
-                        docker compose down -v --rmi all --remove-orphans
+                        parentdir=\$(dirname "${UNINSTALL_SCRIPT}")
+                        file_to_run=\$(basename -- ${UNINSTALL_SCRIPT})
+                        echo \$parentdir
+                        echo \$file_to_run
+                        cd \$parentdir
+                        bash \$file_to_run
                         docker network rm demo-network
                     """
                 }
