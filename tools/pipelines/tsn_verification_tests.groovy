@@ -88,7 +88,7 @@ pipeline{
 
                 stage("Set up dummy netapp."){
                     steps {
-                        dir ("$NetApp_repo/src") {
+                        dir ("$NetApp_repo") {
                             sh """
                                 sed -i 's+"capif_callback_url": "http://192.168.1.13:5000"+"capif_callback_url": "http://host.docker.internal:8086"+g' ${CAPIF_REGISTRATION_CONFIG_PATH}
                                 parentdir=\$(dirname "${SETUP_SCRIPT}")
