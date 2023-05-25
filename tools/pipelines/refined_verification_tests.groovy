@@ -163,7 +163,7 @@ pipeline{
                     sh './clean_capif_docker_services.sh'
                 }
 
-                dir ("$NetApp_repo/src") {
+                dir ("$NetApp_repo") {
                     sh """
                         parentdir=\$(dirname "${UNINSTALL_SCRIPT}")
                         file_to_run=\$(basename -- ${UNINSTALL_SCRIPT})
