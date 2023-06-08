@@ -9,8 +9,6 @@ pipeline{
         string(name: "NetApp_repo_branch", defaultValue: "main", description: "The name of the branch repository of the NetApp to be used." )
         string(name: 'ROBOT_DOCKER_IMAGE_NAME', defaultValue: 'dockerhub.hi.inet/dummy-netapp-testing/robot-test-image', description: 'Robot Docker image name')
         string(name: 'ROBOT_DOCKER_IMAGE_VERSION', defaultValue: '3.1.1', description: 'Robot Docker image version')
-        string(name: 'SETUP_SCRIPT', defaultValue: 'src/run.sh', description: 'Script to deploy network application')
-        string(name: 'UNINSTALL_SCRIPT', defaultValue: 'src/cleanup_docker_containers.sh', description: 'Script to uninstall network application')
         string(name: 'CAPIF_REGISTRATION_CONFIG_PATH', defaultValue: 'src/python_application/capif_registration.json', description: 'Configuration file for capif registration')
         string(name: 'CERTIFICATES_FOLDER_PATH', defaultValue: 'src/python_application/capif_onboarding', description: 'Folder to store certs after capif registration')
         string(name: 'VERIFICATION_FILE', defaultValue: 'src/python_application/0_network_app_to_tsn.py', description: 'Python file that contains functions to verify')
