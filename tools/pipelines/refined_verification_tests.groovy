@@ -79,8 +79,6 @@ pipeline{
                                 make prepare-dev-env
                                 make build-no-cache
                                 make upd
-                                sleep 30s
-                                make db-init
                             """
                         }
                     }
@@ -137,17 +135,25 @@ pipeline{
                                         -v ${WORKSPACE}/results:/opt/robot-tests/results/ \
                                         -v ${WORKSPACE}/tools/credentials.properties:/opt/robot-tests/credentials.properties \
                                         -e FILE_TO_IMPORT=${VERIFICATION_FILE} \
-                                        -e CERTIFICATES_FOLDER_PATH=${CERTIFICATES_FOLDER_PATH} \
+                                        -e CERTIFICATES_FOLDER_PATH=/opt/robot-tests/network-application/${CERTIFICATES_FOLDER_PATH} \
                                          ${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}  
                                 """
                             }
                         }
                     }
                 }
+                stage("Initialize NEF DB"){
+                    steps{
+                        sh """
+                            docker exec -t netapp_robot bash \
+                            -c "python3 /opt/robot-tests/libraries/scenario/db-init.py capifcore"
+                        """
+                    }
+                }
                 stage("Run test cases."){
                     steps{
                         sh """
-                            docker exec -t netapp_robot bash -c "robot tests"
+                            docker exec -t netapp_robot bash -c "sleep 30s && robot tests"
                         """
                     }
                 }
@@ -158,6 +164,12 @@ pipeline{
 
     post{
         always{
+            catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS'){
+                echo 'Shutdown robot framework container'
+                sh """
+                    docker kill netapp_robot
+                """
+            }
             dir("$NetApp_repo"){
                 catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS'){
                     echo 'Shutdown all network application services'
