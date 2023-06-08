@@ -1,6 +1,6 @@
 *** Settings ***
 Documentation   This test file contains the test cases for the network application communication with TSN
-Library         /opt/robot-tests/netapp_to_tsn.py
+Library         %{FILE_TO_IMPORT}
 Library         String
 Library         Collections
 

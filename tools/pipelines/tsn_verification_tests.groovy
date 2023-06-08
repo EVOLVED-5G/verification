@@ -86,18 +86,30 @@ pipeline{
                     }
                 }
 
-                stage("Set up dummy netapp."){
+                stage("Set up netapp."){
                     steps {
-                        dir ("$NetApp_repo") {
-                            sh """
-                                sed -i 's+"capif_callback_url": "http://192.168.1.13:5000"+"capif_callback_url": "http://host.docker.internal:8086"+g' ${CAPIF_REGISTRATION_CONFIG_PATH}
-                                parentdir=\$(dirname "${SETUP_SCRIPT}")
-                                file_to_run=\$(basename -- ${SETUP_SCRIPT})
-                                echo \$parentdir
-                                echo \$file_to_run
-                                cd \$parentdir
-                                bash \$file_to_run
-                            """
+                        script{
+                            if ("$NetApp_repo" == "dummy-network-application") {
+                                dir ("$NetApp_repo/src") {
+                                    sh """
+                                        sed -i 's+"capif_callback_url": "http://192.168.1.13:5000"+"capif_callback_url": "http://host.docker.internal:8086"+g' python_application/capif_registration.json
+                                        bash run.sh
+                                    """
+                                }
+                            }else{
+                                dir ("$NetApp_repo") {
+                                    if (!fileExists('.env')){
+                                        sh """
+                                            template="\$(find . -name *env*)"
+                                            if [ ! -z "\$template" ]; then cp "\$template" .env; else touch .env; fi
+                                        """
+                                    }
+                                    sh """
+                                        sed -i 's+"capif_callback_url": "http://192.168.1.13:5000"+"capif_callback_url": "http://host.docker.internal:8086"+g' ${CAPIF_REGISTRATION_CONFIG_PATH}
+                                        docker-compose up -d
+                                    """
+                                }
+                            }
                         }
                     }
                 }
@@ -116,16 +128,14 @@ pipeline{
                                     passwordVariable: 'PASS'
                             )]) {
                                 sh """
-                                    parentdir=\$(dirname "${SETUP_SCRIPT}")
-                                    echo \$parentdir
-                                    cp $ROOT_DIRECTORY$NetApp_repo/\$parentdir/.env ${WORKSPACE}/.env
-                                    sed -i 's+PATH_TO_CERTS=/usr/src/app/capif_onboarding+PATH_TO_CERTS=/opt/robot-tests/capif_onboarding+g' ${WORKSPACE}/.env
+                                    sed -i 's+PATH_TO_CERTS=/usr/src/app/capif_onboarding+PATH_TO_CERTS=/opt/robot-tests/network-application/${CERTIFICATES_FOLDER_PATH}+g' ${WORKSPACE}/.env
+                                    echo "FILE_TO_IMPORT=/opt/robot-tests/network-application/${VERIFICATION_FILE}" >> ${WORKSPACE}/.env
+                                    echo "CERTIFICATES_FOLDER_PATH=/opt/robot-tests/network-application/${CERTIFICATES_FOLDER_PATH}" >> ${WORKSPACE}/.env
                                     docker run -d -t --name netapp_robot \
                                         --rm --add-host capifcore:host-gateway \
                                         --add-host host.docker.internal:host-gateway \
                                         --env-file ${WORKSPACE}/.env \
-                                        -v ${ROOT_DIRECTORY}${NetApp_repo}/${VERIFICATION_FILE}:/opt/robot-tests/netapp_to_tsn.py \
-                                        -v ${ROOT_DIRECTORY}${NetApp_repo}/${CERTIFICATES_FOLDER_PATH}:/opt/robot-tests/capif_onboarding \
+                                        -v ${ROOT_DIRECTORY}${NetApp_repo}/:/opt/robot-tests/network-application/ \
                                         -v ${WORKSPACE}/tests:/opt/robot-tests/tests/ \
                                         -v ${WORKSPACE}/results:/opt/robot-tests/results/ ${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}  
                                 """
@@ -148,34 +158,42 @@ pipeline{
     post{
         always{
             script {
-                dir ("${env.ROOT_DIRECTORY}/tsn-frontend") {
-                    echo 'Shutdown all tsn services'
+                catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS'){
+                    echo 'Shutdown robot framework container'
                     sh """
-                        docker kill tsn-frontend
-                        docker rm tsn-frontend
-                        docker rmi tsn_frontend:latest
+                        docker kill netapp_robot
                     """
+                }
+                dir("$NetApp_repo"){
+                    catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS'){
+                        echo 'Shutdown all network application services'
+                        sh """
+                            if [ "$NetApp_repo" = "dummy-network-application" ]; then
+                                cd src
+                                bash cleanup_docker_containers.sh
+                                docker network rm demo-network
+                            else
+                                docker-compose down --rmi all --remove-orphans
+                            fi
+                        """
+                    }
+                }
+                dir ("${env.ROOT_DIRECTORY}/tsn-frontend") {
+                    catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS'){
+                        echo 'Shutdown all tsn services'
+                        sh """
+                            docker kill tsn-frontend
+                            docker rm tsn-frontend
+                            docker rmi tsn_frontend:latest
+                        """
+                    }
                 }
                 dir ("${env.ROOT_DIRECTORY}/capif-services/services") {
-                    echo 'Shutdown all capif services'
-                    sh './clean_capif_docker_services.sh'
+                    catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS'){
+                        echo 'Shutdown all capif services'
+                        sh './clean_capif_docker_services.sh'
+                    }
                 }
-
-                dir ("$NetApp_repo") {
-                    sh """
-                        parentdir=\$(dirname "${UNINSTALL_SCRIPT}")
-                        file_to_run=\$(basename -- ${UNINSTALL_SCRIPT})
-                        echo \$parentdir
-                        echo \$file_to_run
-                        cd \$parentdir
-                        bash \$file_to_run
-                        docker network rm demo-network
-                    """
-                }
-                sh """
-                    docker kill netapp_robot
-                    docker rmi ${ROBOT_DOCKER_IMAGE_NAME}:${ROBOT_DOCKER_IMAGE_VERSION}
-                """
             }
 
             script {
