@@ -1,12 +1,18 @@
 robotframework 
 pandas 
 redis 
-flask
+flask 
 evolved5g >= 1.0.0
 robotframework-requests
-robotframework-pabot
+robotframework-pabot 
 requests == 2.26.0
 configparser
 pyopenssl
 pyjwt
 termcolor
+Django
+asgiref
+django-cors-headers
+django-extensions
+django-shell-plus
+djangorestframework
