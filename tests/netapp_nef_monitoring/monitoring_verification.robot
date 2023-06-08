@@ -1,6 +1,6 @@
 *** Settings ***
 Documentation   This test file contains the test cases of monitoring events API functions in network application, refering to Nef API.
-Library         /opt/robot-tests/netapp_to_nef.py
+Library         /opt/robot-tests/network-application/%{FILE_TO_IMPORT}
 Library         String
 Library         Collections
 Resource        /opt/robot-tests/resources/common/basicFunctions.robot
@@ -11,7 +11,7 @@ ${NEF_HOSTNAME}                   https://${CONFIG.credentials.nef_ip}:${CONFIG.
 ${NEF_USER}                       ${CONFIG.credentials.nef_user}
 ${NEF_PASSWORD}                   ${CONFIG.credentials.nef_pass}
 ${non-auth}                       eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY0NzYxNDQxNSwianRpIjoiZTc3MDhjMmMtZjFiMi00MDc1LWFlNTctM2YxYmYyYmU4YWY1IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImN1c3RvbTRuZXRhcHAgaW52b2tlciIsIm5iZiI6MTY0NzYxNDQxNSwiZXhwIjoxNjQ3NjE1MzE1fQ.8CWiqYTtje4AjDmNqA6OjmYMJF3M90NM4GnYIOyHNnI
-${CERTIFICATE_FOLDER}             ${CONFIG.credentials.certificate_folder}
+${CERTIFICATE_FOLDER}             %{CERTIFICATES_FOLDER_PATH}
 ${CAPIF_HOST}                     ${CONFIG.credentials.capif_ip}
 ${CAPIF_PORT}                     ${CONFIG.credentials.capif_port}
 ${NEF_CALLBACK_HOSTNAME}          http://${CONFIG.credentials.nef_callback_ip}:${CONFIG.credentials.nef_callback_port}/nefcallbacks
