@@ -125,10 +125,12 @@ pipeline{
                                     usernameVariable: 'USER',
                                     passwordVariable: 'PASS'
                             )]) {
+                                script{
+                                    def readContent = readFile 'tools/.env'
+                                    writeFile file: 'tools/.env', text: readContent+"\nFILE_TO_IMPORT=/opt/robot-tests/network-application/${VERIFICATION_FILE}\nCERTIFICATES_FOLDER_PATH=/opt/robot-tests/network-application/${CERTIFICATES_FOLDER_PATH}"
+                                }
                                 sh """
                                     sed -i 's+PATH_TO_CERTS=/usr/src/app/capif_onboarding+PATH_TO_CERTS=/opt/robot-tests/network-application/${CERTIFICATES_FOLDER_PATH}+g' ${WORKSPACE}/tools/.env
-                                    echo "FILE_TO_IMPORT=/opt/robot-tests/network-application/${VERIFICATION_FILE}" >> ${WORKSPACE}/tools/.env
-                                    echo "CERTIFICATES_FOLDER_PATH=/opt/robot-tests/network-application/${CERTIFICATES_FOLDER_PATH}" >> ${WORKSPACE}/tools/.env
                                     docker run -d -t --name netapp_robot \
                                         --rm --add-host capifcore:host-gateway \
                                         --add-host host.docker.internal:host-gateway \
