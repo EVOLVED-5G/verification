@@ -98,7 +98,7 @@ pipeline{
                                 dir ("$NetApp_repo") {
                                     if (!fileExists('.env')){
                                         sh """
-                                            template="\$(find . -name *env*)"
+                                            template="\$(ls -a | grep env)"
                                             if [ ! -z "\$template" ]; then cp "\$template" .env; else touch .env; fi
                                         """
                                     }
