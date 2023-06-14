@@ -79,6 +79,8 @@ pipeline{
                                 make prepare-dev-env
                                 make build-no-cache
                                 make upd
+                                sleep 30s
+                                make db-init
                             """
                         }
                     }
@@ -140,14 +142,6 @@ pipeline{
                                 """
                             }
                         }
-                    }
-                }
-                stage("Initialize NEF DB"){
-                    steps{
-                        sh """
-                            docker exec -t netapp_robot bash \
-                            -c "python3 /opt/robot-tests/libraries/scenario/db-init.py capifcore"
-                        """
                     }
                 }
                 stage("Run test cases."){
