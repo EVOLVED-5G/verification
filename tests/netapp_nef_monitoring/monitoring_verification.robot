@@ -50,8 +50,6 @@ Create subscription when there is already an active subscription for a registere
 
     Copy File      /opt/robot-tests/credentials.properties    .
 
-    Log To Console      ${access_token}
-
     ${resp}=            Run Keyword And Expect Error  *    Monitor Subscription   2  ${NEF_HOSTNAME}  ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
 
     Log To Console      ${resp}
