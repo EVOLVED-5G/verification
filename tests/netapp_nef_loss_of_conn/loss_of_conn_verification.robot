@@ -8,10 +8,6 @@ Variables       /opt/robot-tests/libraries/ConfigVariables.py    CONFIG    /opt/
 
 *** Variables ***
 ${NEF_HOSTNAME}                   https://${CONFIG.credentials.nef_ip}:${CONFIG.credentials.nef_port}
-${NEF_USER}                       ${CONFIG.credentials.nef_user}
-${NEF_PASSWORD}                   ${CONFIG.credentials.nef_pass}
-${NEF_HOSTNAME}                   http://${CONFIG.credentials.nef_ip}:${CONFIG.credentials.nef_port}
-${non-auth}                       eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY0NzYxNDQxNSwianRpIjoiZTc3MDhjMmMtZjFiMi00MDc1LWFlNTctM2YxYmYyYmU4YWY1IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6ImN1c3RvbTRuZXRhcHAgaW52b2tlciIsIm5iZiI6MTY0NzYxNDQxNSwiZXhwIjoxNjQ3NjE1MzE1fQ.8CWiqYTtje4AjDmNqA6OjmYMJF3M90NM4GnYIOyHNnI
 ${CERTIFICATE_FOLDER}             %{CERTIFICATES_FOLDER_PATH}
 ${CAPIF_HOST}                     ${CONFIG.credentials.capif_ip}
 ${CAPIF_PORT}                     ${CONFIG.credentials.capif_port}
@@ -28,12 +24,7 @@ Create subscription by Authorized Network Application
 
     Copy File      /opt/robot-tests/credentials.properties    .
 
-    ${access_token}=    Run Keyword    Request Nef Token  ${NEF_HOSTNAME}  ${NEF_USER}  ${NEF_PASSWORD}
-    ${access_token}=    Catenate       ${access_token.access_token}
-
-    Log To Console      ${access_token}
-
-    ${resp}=            Run Keyword   Connection Monitoring Loss Of Conn  ${NEF_HOSTNAME}  ${access_token}  ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
+    ${resp}=            Run Keyword   Connection Monitoring Loss Of Conn  ${NEF_HOSTNAME}  ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
 
     Log To Console      ${resp}
 
@@ -46,25 +37,8 @@ Create subscription when there is already an active subscription for a registere
 
     Copy File      /opt/robot-tests/credentials.properties    .
 
-    ${access_token}=    Run Keyword    Request Nef Token  ${NEF_HOSTNAME}  ${NEF_USER}  ${NEF_PASSWORD}
-    ${access_token}=    Catenate       ${access_token.access_token}
-
-    Log To Console      ${access_token}
-
-    ${resp}=            Run Keyword And Expect Error  *    Connection Monitoring Loss Of Conn  ${NEF_HOSTNAME}  ${access_token}  ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
+    ${resp}=            Run Keyword And Expect Error  *    Connection Monitoring Loss Of Conn  ${NEF_HOSTNAME}  ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
 
     Log To Console      ${resp}
 
     Should Contain    ${resp}   409
-
-Create subscription by unAuthorized Network Application
-
-    [Tags]    Create_subscription_when_already_active_by_Authorized_Network_Application
-
-    Copy File      /opt/robot-tests/credentials.properties    .
-
-    ${resp}=            Run Keyword And Expect Error  *   Connection Monitoring Loss Of Conn  ${NEF_HOSTNAME}  ${non-auth}   ${CERTIFICATE_FOLDER}  ${CAPIF_HOST}  ${CAPIF_PORT}  ${NEF_CALLBACK_HOSTNAME}
-
-    Log To Console      ${resp}
-
-    Should Contain    ${resp}   401
