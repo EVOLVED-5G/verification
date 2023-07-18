@@ -24,7 +24,8 @@ RUN apt-get install -y --no-install-recommends  \
     python3 \
     python3-dev \
     python3-pip \
-    python3-venv 
+    python3-venv \
+    jq
 
 
 RUN add-apt-repository ppa:deadsnakes/ppa
