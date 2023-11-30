@@ -80,7 +80,6 @@ pipeline{
                                 make build-no-cache
                                 make upd
                                 sleep 30s
-                                make db-init
                             """
                         }
                     }
