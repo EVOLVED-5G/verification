@@ -23,7 +23,8 @@ pipeline{
         stage("Checkout code"){
             steps{
                 checkout([$class: 'GitSCM',
-                          branches: [[name: '${NetApp_repo_branch}']],
+//                          branches: [[name: '${NetApp_repo_branch}']],
+                          branches: [[name: 'main']],
                           doGenerateSubmoduleConfigurations: false,
                           extensions: [[$class: 'RelativeTargetDirectory', relativeTargetDir: "$NetApp_repo"]],
                           gitTool: 'Default',
